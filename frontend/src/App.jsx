@@ -1,7 +1,14 @@
 import "./App.css";
+import { Header } from "./Components/Header";
+import { BookPage } from "./Pages/BookPage";
 
 function App() {
-  return <h1>Inicio de la pagina de la Biblioteca</h1>;
+  return (
+    <>
+      <Header />;
+      <BookPage />
+    </>
+  );
 }
 
 export default App;

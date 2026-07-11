@@ -7,6 +7,9 @@ const router = Router();
 // GET todos los libros
 router.get("/books", bookControllers.getBooks);
 
+//GET libro por nombre
+router.get("/books/title/:title", bookControllers.getBookByName);
+
 // GET libro por ID
 router.get("/books/:id", bookControllers.getBook);
 

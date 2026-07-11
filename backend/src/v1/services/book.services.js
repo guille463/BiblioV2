@@ -36,3 +36,11 @@ export const editBookById = async (id, data) => {
   }
   return book;
 };
+
+export const searchBookByName = async (title) => {
+  const book = await booksDatabase.searchBookByName(title);
+  if (!book) {
+    throw { code: "NOT_FOUND" };
+  }
+  return book;
+};

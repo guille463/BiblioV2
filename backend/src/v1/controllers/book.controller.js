@@ -11,6 +11,15 @@ export const getBooks = async (req, res) => {
   res.json(books);
 };
 
+export const getBookByName = async (req, res) => {
+  try {
+    const book = await bookServices.searchBookByName(req.params.title);
+    res.json(book);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /**
  * Obtiene un libro por ID.
  * @param {import('express').Request} req - req.params.id: ID del libro
@@ -89,4 +98,11 @@ export const updateBook = async (req, res) => {
   }
 };
 
-export default { getBooks, getBook, postBook, deleteBook, updateBook };
+export default {
+  getBooks,
+  getBookByName,
+  getBook,
+  postBook,
+  deleteBook,
+  updateBook,
+};

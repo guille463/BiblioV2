@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import { pool } from "../db.js";
 
 /**
@@ -52,4 +53,12 @@ export const updateBookById = async (id, data) => {
     [data.title, data.author, data.isbn, data.genre, data.year, data.stock, id],
   );
   return rows[0] || null;
+};
+
+export const searchBookByName = async (title) => {
+  const { rows } = await pool.query(
+    "SELECT * FROM books WHERE title ILIKE $1",
+    [`%${title}%`],
+  );
+  return rows || null;
 };

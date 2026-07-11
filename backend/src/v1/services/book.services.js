@@ -8,7 +8,7 @@ export const getAllBooks = async () => {
 // Lanza NOT_FOUND si el array de resultado está vacío
 export const getBookById = async (id) => {
   const book = await booksDatabase.findBookById(id);
-  if (book.length === 0) {
+  if (!book) {
     throw { code: "NOT_FOUND" };
   }
   return book;
@@ -17,7 +17,7 @@ export const getBookById = async (id) => {
 // Lanza NOT_FOUND si no había fila que borrar
 export const deleteBookById = async (id) => {
   const book = await booksDatabase.removeBookById(id);
-  if (book.length === 0) {
+  if (!book) {
     throw { code: "NOT_FOUND" };
   }
   return book;
@@ -31,7 +31,7 @@ export const createBook = async (data) => {
 // Lanza NOT_FOUND si no había fila que actualizar
 export const editBookById = async (id, data) => {
   const book = await booksDatabase.updateBookById(id, data);
-  if (book.length === 0) {
+  if (!book) {
     throw { code: "NOT_FOUND" };
   }
   return book;

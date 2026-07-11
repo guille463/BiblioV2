@@ -5,7 +5,7 @@ import { BookPage } from "./Pages/BookPage";
 function App() {
   return (
     <>
-      <Header />;
+      <Header />
       <BookPage />
     </>
   );

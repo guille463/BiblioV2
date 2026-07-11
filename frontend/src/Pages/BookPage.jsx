@@ -1,19 +1,33 @@
+import { useState } from "react";
 import { useBooks } from "../hooks/useBooks";
-import { BookCard } from "../Components/BookCard";
+import { BookCard } from "../components/BookCard";
+import { SearchBar } from "../components/SearchBar";
 
-export function BookPage() {
-  const { books, loading, error } = useBooks();
+export function BooksPage() {
+  const { books, searchResults, loading, error, searchBooks } = useBooks();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (query) => {
+    setSearch(query);
+    searchBooks(query);
+  };
+
+  const displayBooks = search ? searchResults : books;
 
   return (
     <main className="books-page">
-      {loading && <p>Cargando libros...</p>}
-      {error && <p>{error}</p>}
+      <h2 className="books-page-title">Libros</h2>
 
-      <section className="books-grid">
-        {books.map((book) => (
+      <SearchBar onSearch={handleSearch} />
+
+      {loading && <p>Cargando libros...</p>}
+
+      {error && <p className="books-error">{error}</p>}
+
+      <div className="books-grid">
+        {displayBooks.map((book) => (
           <BookCard
             key={book.id}
-            id={book.id}
             title={book.title}
             author={book.author}
             isbn={book.isbn}
@@ -22,7 +36,7 @@ export function BookPage() {
             stock={book.stock}
           />
         ))}
-      </section>
+      </div>
     </main>
   );
 }

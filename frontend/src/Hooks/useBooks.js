@@ -3,6 +3,7 @@ import { booksServices } from "../Services/booksServices";
 
 export function useBooks() {
   const [books, setBooks] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,5 +21,18 @@ export function useBooks() {
     fetchBooks();
   }, []);
 
-  return { books, loading, error };
+  const searchBooks = async (query) => {
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const { data } = await booksServices.getBookByName(query);
+      setSearchResults(data);
+    } catch (err) {
+      setError(err.response?.data?.message ?? "Error in search");
+    }
+  };
+
+  return { books, searchResults, loading, error, searchBooks };
 }

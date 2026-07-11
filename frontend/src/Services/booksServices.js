@@ -1,4 +1,4 @@
-import { axiosClient } from "../Api/axiosClient";
+import axiosClient from "../Api/axiosClient";
 
 export const booksServices = {
   getAll: () => axiosClient.get("/books"),

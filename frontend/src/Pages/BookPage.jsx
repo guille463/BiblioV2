@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
-import { SearchBar } from "../components/SearchBar";
 
 export function BooksPage() {
   const { books, searchResults, loading, error, searchBooks } = useBooks();
   const [search, setSearch] = useState("");
+  const inputRef = useRef();
 
-  const handleSearch = (query) => {
+  const handleSearch = () => {
+    const query = inputRef.current.value;
+    console.log(query);
+
     setSearch(query);
     searchBooks(query);
   };
@@ -18,7 +21,12 @@ export function BooksPage() {
     <main className="books-page">
       <h2 className="books-page-title">Libros</h2>
 
-      <SearchBar onSearch={handleSearch} />
+      <div>
+        <input ref={inputRef} type="search"></input>
+        <button className="button-Search" onClick={handleSearch}>
+          Buscar
+        </button>
+      </div>
 
       {loading && <p>Cargando libros...</p>}
 

@@ -1,15 +1,19 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 export function Header() {
   return (
     <header className="header">
       <h1 className="header-title">Biblioteca Online</h1>
       <nav className="header-nav">
-        <a href="/" className="header-link">
+        <Link to="/" className="header-link">
           Inicio
-        </a>
-        <a href="/books" className="header-link">
+        </Link>
+        <Link to="/books" className="header-link">
           Libros
-        </a>
+        </Link>
+        <Link to="/books/favs" className="header-link">
+          Favoritos
+        </Link>
       </nav>
     </header>
   );

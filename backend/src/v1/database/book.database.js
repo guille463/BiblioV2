@@ -64,8 +64,9 @@ export const searchBookByName = async (title) => {
   return rows || null;
 };
 
-export const putpurchaseBook = async (title) => {
-  const rows = await searchBookByName(title);
+//CAMBIAR el titulo por id
+export const putpurchaseBook = async (id) => {
+  const rows = await findBookById(id);
   if (rows.length === 0) {
     return null;
   } else {

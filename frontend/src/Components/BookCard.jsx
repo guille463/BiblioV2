@@ -1,9 +1,10 @@
 import "./BookCard.css";
+import { FavEmoji } from "../utils/Emojis";
 
 export function BookCard({ book, isFav, onToggleFav }) {
   const isAvailable = book.stock > 0;
   const textAvailable = isAvailable ? "Disponible" : "No Disponible";
-  const favText = isFav ? "Me gusta" : "Añadir a mi lista";
+  const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
 
   return (
     <article className="book-card">
@@ -25,6 +26,7 @@ export function BookCard({ book, isFav, onToggleFav }) {
       </header>
       <aside>
         <button onClick={() => onToggleFav(book)}>{favText}</button>
+        <button>Comprar</button>
       </aside>
     </article>
   );

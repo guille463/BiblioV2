@@ -8,7 +8,7 @@ const router = Router();
 router.get("/books", bookControllers.getBooks);
 
 //GET libro por nombre
-router.get("/books/title/:title", bookControllers.getBookByName);
+router.get("/books/fortitle/:title", bookControllers.getBookByName);
 
 // GET libro por ID
 router.get("/books/:id", bookControllers.getBook);
@@ -21,5 +21,9 @@ router.delete("/books/:id", bookControllers.deleteBook);
 
 // PUT actualizar libro por ID
 router.put("/books/:id", bookControllers.updateBook);
+
+//PUT RESTAR STOCK (PURCHASE)
+
+router.put("/books/buy/:title", bookControllers.purchaseBook);
 
 export default router;

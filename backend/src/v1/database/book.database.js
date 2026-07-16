@@ -55,10 +55,25 @@ export const updateBookById = async (id, data) => {
   return rows[0] || null;
 };
 
+//CAMBIAR A getBookByName
 export const searchBookByName = async (title) => {
   const { rows } = await pool.query(
     "SELECT * FROM books WHERE title ILIKE $1",
     [`%${title}%`],
   );
   return rows || null;
+};
+
+export const putpurchaseBook = async (title) => {
+  const rows = await searchBookByName(title);
+  if (rows.length === 0) {
+    return null;
+  } else {
+    const book = rows[0];
+    const result = await pool.query(
+      "UPDATE books SET stock = stock -1 WHERE id = $1 AND stock > 0 RETURNING *",
+      [book.id],
+    );
+    return result.rows[0] || null;
+  }
 };

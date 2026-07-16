@@ -44,3 +44,17 @@ export const searchBookByName = async (title) => {
   }
   return book;
 };
+
+export const decreaseStock = async (title) => {
+  const book = await booksDatabase.searchBookByName(title);
+
+  if (!book) {
+    throw { code: "BOOK_NOT_FOUND" };
+  }
+  const resultStock = await booksDatabase.putpurchaseBook(title);
+  if (!resultStock) {
+    throw { code: "OUT_OF_STOCK" };
+  }
+
+  return resultStock;
+};

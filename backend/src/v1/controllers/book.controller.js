@@ -98,6 +98,20 @@ export const updateBook = async (req, res) => {
   }
 };
 
+/**
+ * Decrementar vel stock del libro en 1
+ * @param {import('express).Request} req - req.params.title: title(libro)
+ * @param {import('express).Request} res - book
+ */
+export const purchaseBook = async (req, res) => {
+  try {
+    const book = await bookServices.decreaseStock(req.params.title);
+    res.json(book);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export default {
   getBooks,
   getBookByName,
@@ -105,4 +119,5 @@ export default {
   postBook,
   deleteBook,
   updateBook,
+  purchaseBook,
 };

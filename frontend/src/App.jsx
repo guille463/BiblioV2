@@ -24,11 +24,12 @@ function App() {
     );
   };
 
-  console.log(bookFav);
+  console.log("Favoritos", bookFav);
+  console.log("Carrito", bookInPurchase);
 
   return (
     <>
-      <Header />
+      <Header bookFav={bookFav} booksInPurchase={bookInPurchase} />
       <Routes>
         <Route
           path="/"

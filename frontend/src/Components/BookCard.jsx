@@ -1,10 +1,17 @@
 import "./BookCard.css";
 import { FavEmoji } from "../utils/Emojis";
 
-export function BookCard({ book, isFav, onToggleFav, onPurchase }) {
+export function BookCard({
+  book,
+  isFav,
+  isOnPur,
+  onToggleFav,
+  onTogglePurchase,
+}) {
   const isAvailable = book.stock > 0;
   const textAvailable = isAvailable ? "Disponible" : "No Disponible";
   const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
+  const purchaseTextButton = isAvailable ? "" : "Sin stock";
 
   return (
     <article className="book-card">
@@ -26,8 +33,12 @@ export function BookCard({ book, isFav, onToggleFav, onPurchase }) {
       </header>
       <aside>
         <button onClick={() => onToggleFav(book)}>{favText}</button>
-        <button disabled={!isAvailable} onClick={() => onPurchase(book.id)}>
-          Comprar
+        <button
+          className="purchase-button"
+          disabled={!isAvailable}
+          onClick={() => onTogglePurchase(book)}
+        >
+          {purchaseTextButton}
         </button>
       </aside>
     </article>

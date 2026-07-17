@@ -65,16 +65,11 @@ export const searchBookByName = async (title) => {
 };
 
 //CAMBIAR el titulo por id
+
 export const putpurchaseBook = async (id) => {
-  const rows = await findBookById(id);
-  if (rows.length === 0) {
-    return null;
-  } else {
-    const book = rows[0];
-    const result = await pool.query(
-      "UPDATE books SET stock = stock -1 WHERE id = $1 AND stock > 0 RETURNING *",
-      [book.id],
-    );
-    return result.rows[0] || null;
-  }
+  const result = await pool.query(
+    "UPDATE books SET stock = stock - 1 WHERE id = $1 AND stock > 0 RETURNING *",
+    [id],
+  );
+  return result.rows[0] || null;
 };

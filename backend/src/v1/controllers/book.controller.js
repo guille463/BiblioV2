@@ -100,15 +100,22 @@ export const updateBook = async (req, res) => {
 
 /**
  * Decrementar vel stock del libro en 1
- * @param {import('express).Request} req - req.params.title: title(libro)
+ * @param {import('express).Request} req - req.params.id: id(libro)
  * @param {import('express).Request} res - book
  */
 export const purchaseBook = async (req, res) => {
   try {
-    const book = await bookServices.decreaseStock(req.params.title);
+    const book = await bookServices.decreaseStock(req.params.id);
     res.json(book);
   } catch (error) {
+    if (error.code === "BOOK_NOT_FOUND") {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    if (error.code === "OUT_OF_STOCK") {
+      return res.status(409).json({ error: "Out of stock" });
+    }
     console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

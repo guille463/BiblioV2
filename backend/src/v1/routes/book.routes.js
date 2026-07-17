@@ -24,6 +24,6 @@ router.put("/books/:id", bookControllers.updateBook);
 
 //PUT RESTAR STOCK (PURCHASE)
 
-router.put("/books/buy/:title", bookControllers.purchaseBook);
+router.put("/books/buy/:id", bookControllers.purchaseBook);
 
 export default router;

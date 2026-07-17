@@ -54,7 +54,7 @@ export function BooksPage({
             isFav={bookFav.some((b) => b.isbn === book.isbn)}
             isOnPur={booksInPurchase.some((b) => b.id === book.id)}
             onToggleFav={onToggleFav}
-            onPurchase={onTogglePurchase}
+            onTogglePurchase={onTogglePurchase}
           />
         ))}
       </div>

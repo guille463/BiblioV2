@@ -2,9 +2,13 @@ import { useState, useRef } from "react";
 import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
 
-export function BooksPage({ bookFav, onToggleFav }) {
-  const { books, searchResults, loading, error, searchBooks, purchaseBooks } =
-    useBooks();
+export function BooksPage({
+  bookFav,
+  booksInPurchase,
+  onToggleFav,
+  onTogglePurchase,
+}) {
+  const { books, searchResults, loading, error, searchBooks } = useBooks();
 
   /**
    * @param search se trata de la informacion que va a ir en la barra de busqueda como texto
@@ -48,8 +52,9 @@ export function BooksPage({ bookFav, onToggleFav }) {
             key={book.id}
             book={book}
             isFav={bookFav.some((b) => b.isbn === book.isbn)}
+            isOnPur={booksInPurchase.some((b) => b.id === book.id)}
             onToggleFav={onToggleFav}
-            onPurchase={purchaseBooks}
+            onPurchase={onTogglePurchase}
           />
         ))}
       </div>

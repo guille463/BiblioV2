@@ -14,6 +14,7 @@ export function Header() {
         <Link to="/books/favs" className="header-link">
           Favoritos
         </Link>
+        <button className="purchageList-button-header">Carrito</button>
       </nav>
     </header>
   );

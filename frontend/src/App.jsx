@@ -6,7 +6,6 @@ import { FavBookPage } from "./pages/FavBookPage";
 
 function App() {
   const [bookFav, setBookFav] = useState([]);
-
   const handleToggleFav = (book) => {
     setBookFav((prevList) =>
       prevList.some((b) => b.isbn === book.isbn)

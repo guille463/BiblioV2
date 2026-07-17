@@ -4,6 +4,7 @@ import { booksServices } from "../Services/booksServices";
 export function useBooks() {
   const [books, setBooks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [purchasedBooks, setPurchasedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -34,5 +35,28 @@ export function useBooks() {
     }
   };
 
-  return { books, searchResults, loading, error, searchBooks };
+  const purchaseBooks = async (id) => {
+    try {
+      const { data } = await booksServices.purchaseBook(id);
+      setBooks((prev) =>
+        prev.map((book) => (book.id === data.id ? data : book)),
+      );
+      setPurchasedBooks((prev) => [...prev, data]);
+    } catch (err) {
+      setError(err.response?.data?.error ?? "Error in purchase");
+    }
+  };
+
+  useEffect(() => {
+    console.log("comprados:", purchasedBooks);
+  }, [purchasedBooks]);
+
+  return {
+    books,
+    searchResults,
+    loading,
+    error,
+    searchBooks,
+    purchaseBooks,
+  };
 }

@@ -3,7 +3,8 @@ import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
 
 export function BooksPage({ bookFav, onToggleFav }) {
-  const { books, searchResults, loading, error, searchBooks } = useBooks();
+  const { books, searchResults, loading, error, searchBooks, purchaseBooks } =
+    useBooks();
 
   /**
    * @param search se trata de la informacion que va a ir en la barra de busqueda como texto
@@ -48,6 +49,7 @@ export function BooksPage({ bookFav, onToggleFav }) {
             book={book}
             isFav={bookFav.some((b) => b.isbn === book.isbn)}
             onToggleFav={onToggleFav}
+            onPurchase={purchaseBooks}
           />
         ))}
       </div>

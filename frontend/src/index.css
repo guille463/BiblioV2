@@ -3,3 +3,35 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --color-primary: #1e5c46;
+  --color-primary-dark: #174734;
+  --color-surface: #fdfcfa;
+  --color-border: #e4e0d8;
+  --color-text: #21302a;
+  --color-text-muted: #6b6a64;
+  --color-danger: #b3403a;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --space-page: 1.5rem;
+  --page-max-width: 1200px;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: #f6f4ef;
+}
+
+page-container {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--space-page);
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -23,12 +23,16 @@ export function BookCard({
         />
         <div className="book-card-info">
           <h3 className="book-card-title">Titulo: {book.title}</h3>
-          <p className="book-card-author">Autor: {book.author}</p>
-          <p className="book-card-isbn">ISBN: {book.isbn}</p>
-          <p className="book-card-genre">Genero: {book.genre}</p>
-          <p className="book-card-year">Año: {book.year}</p>
-          <p className="book-card-stock">Stock: {book.stock}</p>
-          <p className="book-card-stock-info">Estado: {textAvailable}</p>
+          <p className="book-card-author">Autor/a: {book.author}</p>
+          <ul className="book-list-info">
+            <li className="book-card-isbn">
+              <strong>ISBN: {book.isbn}</strong>
+            </li>
+            <li className="book-card-genre">Genero: {book.genre}</li>
+            <li className="book-card-year">Año: {book.year}</li>
+            <li className="book-card-stock">Stock: {book.stock}</li>
+            <li className="book-card-stock-info">Estado: {textAvailable}</li>
+          </ul>
         </div>
       </header>
       <aside>

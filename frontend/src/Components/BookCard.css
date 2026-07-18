@@ -1,0 +1,112 @@
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fdfcfa;
+  border: 1px solid #e4e0d8;
+  border-radius: 10px;
+  padding: 1rem;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.book-card:hover {
+  box-shadow: 0 8px 20px rgba(30, 42, 34, 0.12);
+  transform: translateY(-3px);
+}
+
+.book-card-header {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Firma: portada como libro físico — sombra de lomo a la izquierda */
+.book-card-img {
+  width: 110px;
+  height: 165px;
+  object-fit: cover;
+  border-radius: 3px 6px 6px 3px;
+  box-shadow:
+    inset 6px 0 8px -6px rgba(0, 0, 0, 0.55),
+    2px 3px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  background: #ece8e0;
+}
+
+.book-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.book-card-title {
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: #21302a;
+  margin: 0 0 0.25rem;
+}
+
+.book-card-author {
+  color: #1e5c46;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.book-card-isbn,
+.book-card-genre,
+.book-card-year,
+.book-card-stock,
+.book-card-stock-info {
+  font-size: 0.82rem;
+  color: #6b6a64;
+  margin: 0;
+}
+
+.book-card aside {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Botón favorito (primer botón del aside) */
+.book-card aside button:first-child {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #1e5c46;
+  border-radius: 6px;
+  background: transparent;
+  color: #1e5c46;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.book-card aside button:first-child:hover {
+  background: #e8f1ed;
+}
+
+.purchase-button {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background: #1e5c46;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.purchase-button:hover:not(:disabled) {
+  background: #174734;
+}
+
+.purchase-button:disabled {
+  background: #d8d5cd;
+  color: #8a887f;
+  cursor: not-allowed;
+}

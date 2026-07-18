@@ -36,9 +36,9 @@ export function BooksPage({
     <main className="books-page">
       <h2 className="books-page-title">Libros</h2>
 
-      <div>
-        <input ref={inputRef} type="search"></input>
-        <button className="button-Search" onClick={handleSearch}>
+      <div className="books-search">
+        <input ref={inputRef} type="search" />
+        <button className="search-button" onClick={handleSearch}>
           Buscar
         </button>
       </div>

@@ -1,4 +1,4 @@
-import axiosClient from "../Api/axiosClient.js";
+import axiosClient from "../api/axiosClient.js";
 
 export const BookServices = {
   //GET

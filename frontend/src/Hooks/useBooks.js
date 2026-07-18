@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { booksServices } from "../Services/booksServices";
+import { BookServices } from "../Services/BookServices";
 
 export function useBooks() {
   const [books, setBooks] = useState([]);
@@ -11,7 +11,7 @@ export function useBooks() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const { data } = await booksServices.getAll();
+        const { data } = await BookServices.getAll();
         setBooks(data);
       } catch (err) {
         setError(err.response?.data?.message ?? "Error searching books");
@@ -28,7 +28,7 @@ export function useBooks() {
       return;
     }
     try {
-      const { data } = await booksServices.getBookByName(query);
+      const { data } = await BookServices.getBookByName(query);
       setSearchResults(data);
     } catch (err) {
       setError(err.response?.data?.message ?? "Error in search");
@@ -37,7 +37,7 @@ export function useBooks() {
 
   const purchaseBooks = async (id) => {
     try {
-      const { data } = await booksServices.purchaseBook(id);
+      const { data } = await BookServices.purchaseBook(id);
       setBooks((prev) =>
         prev.map((book) => (book.id === data.id ? data : book)),
       );

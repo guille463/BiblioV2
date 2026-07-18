@@ -15,7 +15,7 @@ export function Header({ bookFav = [], booksInPurchase = [] }) {
 
   return (
     <header className="header">
-      <h1 className="header-title">Biblioteca Online</h1>
+      <h1 className="header-title">Bibliotecas Online</h1>
       <nav className="header-nav">
         <Link to="/" className="header-link">
           Inicio

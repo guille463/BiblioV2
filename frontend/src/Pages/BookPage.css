@@ -1,0 +1,44 @@
+.books-page-title {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.books-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.books-search input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  flex: 1;
+  max-width: 320px;
+}
+
+.button-Search {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2b3491;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button-Search:hover {
+  background-color: #1f2670;
+}
+
+.books-error {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}

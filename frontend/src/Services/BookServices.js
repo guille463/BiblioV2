@@ -1,6 +1,6 @@
 import axiosClient from "../Api/axiosClient.js";
 
-export const booksServices = {
+export const BookServices = {
   //GET
   getAll: () => axiosClient.get("/books"),
   getById: (id) => axiosClient.get(`/books/${id}`),

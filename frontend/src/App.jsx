@@ -29,7 +29,11 @@ function App() {
 
   return (
     <>
-      <Header bookFav={bookFav} booksInPurchase={bookInPurchase} />
+      <Header
+        bookFav={bookFav}
+        booksInPurchase={bookInPurchase}
+        onTogglePurchase={handleTogglePurchased}
+      />
       <div className="page-container">
         <Routes>
           <Route

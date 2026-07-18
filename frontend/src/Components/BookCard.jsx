@@ -11,7 +11,9 @@ export function BookCard({
   const isAvailable = book.stock > 0;
   const textAvailable = isAvailable ? "Disponible" : "No Disponible";
   const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
-  const purchaseTextButton = isOnPur ? "Añadir al carrito" : "FuturoRetirar";
+  const purchaseTextButton = isOnPur
+    ? "Retirar del carrito"
+    : "Añadir al carrito";
 
   return (
     <article className="book-card">

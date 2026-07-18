@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
+import "./BookPage.css";
 
 export function BooksPage({
   bookFav,

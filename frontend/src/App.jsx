@@ -25,7 +25,7 @@ function App() {
       }
 
       return prev.map((item) =>
-        item.book.id === book.id
+        item.book.id === book.id && item.quantity < book.stock
           ? { ...item, quantity: item.quantity + 1 }
           : item,
       );
@@ -35,12 +35,25 @@ function App() {
     setCartItem((prev) => prev.filter((item) => item.book.id !== book.id));
   };
 
+  const handleRemoveOneFromCart = (book) => {
+    setCartItem((prev) =>
+      prev
+        .map((item) =>
+          item.book.id === book.id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
+    );
+  };
+
   return (
     <>
       <Header
         cartItems={cartItem}
         onAddToCart={handleAddToCart}
         onRemoveFromCart={handleRemoveFromCart}
+        onRemoveOneFromCart={handleRemoveOneFromCart}
       />
       <div className="page-container">
         <Routes>

@@ -1,6 +1,6 @@
 import "./PurchaseCard.css";
 
-export function PurchaseCard({ item, onRemove }) {
+export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
   const { book, quantity } = item;
 
   return (
@@ -15,6 +15,18 @@ export function PurchaseCard({ item, onRemove }) {
         <p className="purchase-card-isbn">{book.isbn}</p>
       </div>
       <span className="purchase-card-quantity">x{quantity}</span>
+      <button
+        className="purchase-button-addOne"
+        onAuxClick={() => onAddToCart(book)}
+      >
+        +
+      </button>
+      <button
+        className="purchase-button-removeOne"
+        onClick={() => onRemoveOne(book)}
+      >
+        -
+      </button>
       <span className="purchase-card-price">
         {(Number(book.price) * quantity).toFixed(2)} €
       </span>

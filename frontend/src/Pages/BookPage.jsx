@@ -1,47 +1,103 @@
-import "./BookCard.css";
-import { FavEmoji } from "../utils/Emojis";
+import { useState, useRef } from "react";
+import { useBooks } from "../hooks/useBooks";
+import { BookCard } from "../components/BookCard";
+import "./BookPage.css";
 
-export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
-  const isAvailable = book.stock > 0;
-  const textAvailable = isAvailable ? "Disponible" : "No Disponible";
-  const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
-  const purchaseTextButton = isOnPur ? "Añadir otro" : "Añadir al carrito";
+export function BooksPage({
+  bookFav,
+  cartItem = [],
+  onToggleFav,
+  onAddToCart,
+}) {
+  const inputRef = useRef();
+
+  const { books, searchResults, loading, error, searchBooks } = useBooks();
+
+  /**
+   * @param search se trata de la informacion que va a ir en la barra de busqueda como texto
+   */
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const BOOKS_PER_PAGE = 10;
+  const displayBooks = search ? searchResults : books;
+  const totalPages = Math.ceil(displayBooks.length / BOOKS_PER_PAGE);
+  const startIndex = (currentPage - 1) * BOOKS_PER_PAGE;
+
+  const visibleBooks = displayBooks.slice(
+    startIndex,
+    startIndex + BOOKS_PER_PAGE,
+  );
+
+  /**
+   * Funcion para buscar libro en la barra de busqueda
+   * @param query es el valor del input del usuario, pasara a ser la informacion que se va a buscar por el usuario (@param search)
+   * @param inputRef va a ser la referencia del input para poder manejarlo y extraer el valor
+   * @function searchBooks esta funcion dentro de nuestros hooks recibira como parametro la informacion que el usuario quiera buscar
+   */
+  const handleSearch = () => {
+    const query = inputRef.current.value;
+    setSearch(query);
+    searchBooks(query);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
 
   return (
-    <article className="book-card">
-      <header className="book-card-header">
-        <img
-          className="book-card-img"
-          src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
-          alt={book.title}
-        />
-        <div className="book-card-info">
-          <h3 className="book-card-title">Titulo: {book.title}</h3>
-          <p className="book-card-author">Autor/a: {book.author}</p>
-          <ul className="book-list-info">
-            <li className="book-card-isbn">
-              <strong>ISBN: {book.isbn}</strong>
-            </li>
-            <li className="book-card-genre">Genero: {book.genre}</li>
-            <li className="book-card-year">Año: {book.year}</li>
-            <li className="book-card-stock">Stock: {book.stock}</li>
-            <li className="book-card-stock-info">Estado: {textAvailable}</li>
-            <li className="book-card-price">Precio: {book.price} €</li>
-          </ul>
+    <main className="books-page">
+      <h2 className="books-page-title">Libros</h2>
+
+      <div className="books-search">
+        <input ref={inputRef} type="search" />
+        <button className="search-button" onClick={handleSearch}>
+          Buscar
+        </button>
+      </div>
+
+      {loading && <p>Cargando libros...</p>}
+
+      {error && <p className="books-error">{error}</p>}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="pagination-button"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            Anterior
+          </button>
+          <span className="pagination-info">
+            Pagina {currentPage} de {totalPages}
+          </span>
+          <button
+            className="pagination-button"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+          </button>
         </div>
-      </header>
-      <aside>
-        <button className="fav-button" onClick={() => onToggleFav(book)}>
-          {favText}
-        </button>
-        <button
-          className="purchase-button"
-          disabled={!isAvailable}
-          onClick={() => onAddToCart(book)}
-        >
-          {purchaseTextButton}
-        </button>
-      </aside>
-    </article>
+      )}
+
+      <div className="books-grid">
+        {visibleBooks.map((book) => (
+          <BookCard
+            key={book.id}
+            book={book}
+            isFav={bookFav.some((b) => b.isbn === book.isbn)}
+            isOnPur={cartItem.some((item) => item.book.id === book.id)}
+            onToggleFav={onToggleFav}
+            onAddToCart={onAddToCart}
+            cartQuantity={cartItem ? cartItem.quantity : 0}
+          />
+        ))}
+      </div>
+    </main>
   );
 }

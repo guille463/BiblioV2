@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
-export function Header({ cartItems = [], onRemoveFromCart }) {
+export function Header({
+  cartItems = [],
+  onRemoveFromCart,
+  onRemoveOneFromCart,
+  onAddToCart,
+}) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleToggleCart = () => {
@@ -41,7 +46,9 @@ export function Header({ cartItems = [], onRemoveFromCart }) {
                   <PurchaseCard
                     key={item.book.id}
                     item={item}
+                    onAddToCart={onAddToCart}
                     onRemove={onRemoveFromCart}
+                    onRemoveOne={onRemoveOneFromCart}
                   />
                 ))
               )}

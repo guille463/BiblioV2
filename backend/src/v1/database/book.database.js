@@ -74,7 +74,7 @@ export const updateBookById = async (id, data) => {
 //BuscarLibro por nombre, titulo o isbn
 export const searchBook = async (query) => {
   const { rows } = await pool.query(
-    "SELECT * FROM books WHERE title = $1, OR author = $1 OR isbn = $1",
+    "SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE  $1 OR isbn ILIKE  $1",
     [`%${query}%`],
   );
   return rows;

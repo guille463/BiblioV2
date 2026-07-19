@@ -17,7 +17,7 @@ export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
       <span className="purchase-card-quantity">x{quantity}</span>
       <button
         className="purchase-button-addOne"
-        onAuxClick={() => onAddToCart(book)}
+        onClick={() => onAddToCart(book)}
       >
         +
       </button>

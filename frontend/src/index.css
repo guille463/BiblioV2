@@ -34,3 +34,53 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
+.page-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 4rem 2rem;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  color: var(--color-border);
+  line-height: 1;
+}
+
+.empty-state-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.empty-state-text {
+  color: var(--color-text-muted);
+  max-width: 360px;
+}
+
+.empty-state-cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--color-primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+.empty-state-cta:hover {
+  background: var(--color-primary-dark);
+}

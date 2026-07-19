@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { BooksPage } from "./pages/BookPage";
 import { FavBookPage } from "./pages/FavBookPage";
+import { IndexPage } from "./pages/IndexPage";
 
 function App() {
   const [bookFav, setBookFav] = useState([]);
@@ -36,17 +37,7 @@ function App() {
       />
       <div className="page-container">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <BooksPage
-                bookFav={bookFav}
-                booksInPurchase={bookInPurchase}
-                onToggleFav={handleToggleFav}
-                onTogglePurchase={handleTogglePurchased}
-              />
-            }
-          />
+          <Route path="/" element={<IndexPage />} />
           <Route
             path="/books"
             element={

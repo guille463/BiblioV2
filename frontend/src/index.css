@@ -15,7 +15,7 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --space-page: 1.5rem;
-  --page-max-width: 1200px;
+  --page-max-width: 1500px;
 }
 
 body {
@@ -24,10 +24,9 @@ body {
   background: #f6f4ef;
 }
 
-page-container {
-  max-width: var(--page-max-width);
+.page-container {
   margin: 0 auto;
-  padding: var(--space-page);
+  padding: 0 2rem 1.5rem;
 }
 
 .flex-between {

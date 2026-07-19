@@ -71,14 +71,23 @@ export const updateBookById = async (id, data) => {
   return rows[0] || null;
 };
 
-//CAMBIAR A getBookByName
-export const searchBookByName = async (title) => {
+//BuscarLibro por nombre, titulo o isbn
+export const searchBook = async (query) => {
   const { rows } = await pool.query(
-    "SELECT * FROM books WHERE title ILIKE $1",
-    [`%${title}%`],
+    "SELECT * FROM books WHERE title = $1, OR author = $1 OR isbn = $1",
+    [`%${query}%`],
   );
-  return rows || null;
+  return rows;
 };
+
+// //CAMBIAR A getBookByName
+// export const searchBookByName = async (title) => {
+//   const { rows } = await pool.query(
+//     "SELECT * FROM books WHERE title ILIKE $1",
+//     [`%${title}%`],
+//   );
+//   return rows || null;
+// };
 
 //CAMBIAR el titulo por id
 

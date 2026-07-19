@@ -37,13 +37,17 @@ export const editBookById = async (id, data) => {
   return book;
 };
 
-export const searchBookByName = async (title) => {
-  const book = await booksDatabase.searchBookByName(title);
-  if (!book) {
-    throw { code: "NOT_FOUND" };
-  }
-  return book;
+export const searchBook = async (query) => {
+  return await booksDatabase.searchBook(query);
 };
+
+// export const searchBookByName = async (title) => {
+//   const book = await booksDatabase.searchBookByName(title);
+//   if (!book) {
+//     throw { code: "NOT_FOUND" };
+//   }
+//   return book;
+// };
 
 export const decreaseStock = async (id) => {
   const book = await booksDatabase.findBookById(id);

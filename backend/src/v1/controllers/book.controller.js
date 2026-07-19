@@ -11,14 +11,23 @@ export const getBooks = async (req, res) => {
   res.json(books);
 };
 
-export const getBookByName = async (req, res) => {
+export const searchBook = async (req, res) => {
   try {
-    const book = await bookServices.searchBookByName(req.params.title);
-    res.json(book);
+    const books = await bookServices.searchBook(req.params.query);
+    res.json(books);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: "Internal error" });
   }
 };
+
+// export const getBookByName = async (req, res) => {
+//   try {
+//     const book = await bookServices.searchBookByName(req.params.title);
+//     res.json(book);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 /**
  * Obtiene un libro por ID.
@@ -122,7 +131,8 @@ export const purchaseBook = async (req, res) => {
 
 export default {
   getBooks,
-  getBookByName,
+  searchBook,
+  //getBookByName,
   getBook,
   postBook,
   deleteBook,

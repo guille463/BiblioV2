@@ -8,15 +8,6 @@ import { IndexPage } from "./pages/IndexPage";
 function App() {
   const [bookFav, setBookFav] = useState([]);
   const [cartItem, setCartItem] = useState([]);
-  const [form, setFrom] = useState({
-    title: "",
-    author: "",
-    isbn: "",
-    genre: "",
-    year: "",
-    stock: "",
-    price: "",
-  });
 
   const handleToggleFav = (book) => {
     setBookFav((prevList) =>
@@ -54,11 +45,6 @@ function App() {
         )
         .filter((item) => item.quantity > 0),
     );
-  };
-
-  const handleFormBook = (input) => {
-    const { name, value } = input.target;
-    setFrom((prev) => ({ ...prev, [name]: value }));
   };
 
   return (

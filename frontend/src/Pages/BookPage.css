@@ -57,3 +57,9 @@
   padding-top: 1rem;
   padding-bottom: 2rem;
 }
+
+.pagination-button {
+  border: none;
+  background-color: transparent;
+  color: rgb(20, 51, 21);
+}

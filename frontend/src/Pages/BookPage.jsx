@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
+import { leftPage, rightPage } from "../utils/Emojis";
 import "./BookPage.css";
 
 export function BooksPage({
@@ -70,7 +71,7 @@ export function BooksPage({
             onClick={handlePrevPage}
             disabled={currentPage === 1}
           >
-            Anterior
+            {leftPage}
           </button>
           <span className="pagination-info">
             Pagina {currentPage} de {totalPages}
@@ -80,7 +81,7 @@ export function BooksPage({
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
           >
-            Siguiente
+            {rightPage}
           </button>
         </div>
       )}

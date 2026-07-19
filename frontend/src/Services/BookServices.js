@@ -4,7 +4,8 @@ export const BookServices = {
   //GET
   getAll: () => axiosClient.get("/books"),
   getById: (id) => axiosClient.get(`/books/${id}`),
-  getBookByName: (title) => axiosClient.get(`/books/title/${title}`),
+  getBookbyInfo: (data) => axiosClient.get(`/books/find/${data}`),
+  //getBookByName: (title) => axiosClient.get(`/books/title/${title}`),
   //POST
   createBook: (data) => axiosClient.post("/books", data),
   //PUT

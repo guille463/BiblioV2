@@ -31,6 +31,7 @@ export const getBook = async (req, res) => {
     const book = await bookServices.getBookById(req.params.id);
     res.json(book);
   } catch (error) {
+    console.error(error);
     if (error.code === "NOT_FOUND") {
       return res.status(404).json({ message: "Book not found" });
     }

@@ -6,11 +6,11 @@ CREATE TABLE books (
     isbn VARCHAR(13) UNIQUE,
     genre VARCHAR(100),
     year SMALLINT,
-    stock INT NOT NULL DEFAULT 0
+    stock INT NOT NULL DEFAULT 0,
     price DECIMAL (10, 2) NOT NULL
 );
 
 
 --DATOS PRUEBA LIBROS
-INSERT INTO books (title, author, isbn, genre, year, stock) VALUES ('La Osadia', 'Juan Carlos', '9783161484100', 'Terror', 2014, 100, 20.50 )
-
+INSERT INTO books (title, author, isbn, genre, year, stock, price)
+VALUES ('La Osadia', 'Juan Carlos', '9783161484100', 'Terror', 2014, 100, 20.50);

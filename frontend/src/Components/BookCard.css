@@ -22,7 +22,6 @@
   gap: 1rem;
 }
 
-/* Firma: portada como libro físico — sombra de lomo a la izquierda */
 .book-card-img {
   width: 110px;
   height: 165px;
@@ -72,7 +71,6 @@
   margin-top: 1rem;
 }
 
-/* Botón favorito (primer botón del aside) */
 .book-card aside button:first-child {
   flex: 1;
   padding: 0.5rem 0.75rem;

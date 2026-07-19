@@ -21,8 +21,8 @@
 
 .purchase-card-info {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.1rem;
   min-width: 0;
   flex: 1;
 }
@@ -37,9 +37,24 @@
 }
 
 .purchase-card-isbn {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--color-text-muted);
+}
+
+.purchase-card-quantity {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
   flex-shrink: 0;
+}
+
+.purchase-card-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: right;
 }
 
 .purchase-card-remove {

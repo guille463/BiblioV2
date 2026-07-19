@@ -1,5 +1,4 @@
-import { json, Router } from "express";
-import { pool } from "../db.js";
+import { Router } from "express";
 import * as bookControllers from "../controllers/book.controller.js";
 
 const router = Router();
@@ -7,8 +6,11 @@ const router = Router();
 // GET todos los libros
 router.get("/books", bookControllers.getBooks);
 
-//GET libro por nombre
-router.get("/books/fortitle/:title", bookControllers.getBookByName);
+// GET libro por título
+router.get("/books/title/:title", bookControllers.getBookByName);
+
+// PUT restar stock (purchase) — específica antes que /books/:id
+router.put("/books/buy/:id", bookControllers.purchaseBook);
 
 // GET libro por ID
 router.get("/books/:id", bookControllers.getBook);
@@ -21,9 +23,5 @@ router.delete("/books/:id", bookControllers.deleteBook);
 
 // PUT actualizar libro por ID
 router.put("/books/:id", bookControllers.updateBook);
-
-//PUT RESTAR STOCK (PURCHASE)
-
-router.put("/books/buy/:id", bookControllers.purchaseBook);
 
 export default router;

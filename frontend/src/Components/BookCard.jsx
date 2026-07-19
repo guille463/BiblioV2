@@ -34,6 +34,7 @@ export function BookCard({
             <li className="book-card-year">Año: {book.year}</li>
             <li className="book-card-stock">Stock: {book.stock}</li>
             <li className="book-card-stock-info">Estado: {textAvailable}</li>
+            <li className="book-card-price">Precio: {book.price}</li>
           </ul>
         </div>
       </header>

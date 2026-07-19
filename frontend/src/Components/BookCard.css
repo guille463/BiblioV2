@@ -58,7 +58,8 @@
 .book-card-genre,
 .book-card-year,
 .book-card-stock,
-.book-card-stock-info {
+.book-card-stock-info,
+.book-card.price {
   font-size: 0.82rem;
   color: #6b6a64;
   margin: 0;

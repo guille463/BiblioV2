@@ -11,6 +11,7 @@ export function PurchaseCard({ book, onRemove }) {
       <div className="purchase-card-info">
         <p className="purchase-card-title">{book.title}</p>
         <p className="purchase-card-isbn">{book.isbn}</p>
+        <p className="purchase.card.price">{book.price}</p>
       </div>
       <button className="purchase-card-remove" onClick={() => onRemove(book)}>
         Quitar

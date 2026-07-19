@@ -7,7 +7,7 @@ import { IndexPage } from "./pages/IndexPage";
 
 function App() {
   const [bookFav, setBookFav] = useState([]);
-  const [bookInPurchase, setBooksInPurchased] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
 
   const handleToggleFav = (book) => {
     setBookFav((prevList) =>
@@ -17,23 +17,30 @@ function App() {
     );
   };
 
-  const handleTogglePurchased = (book) => {
-    setBooksInPurchased((prevList) =>
-      prevList.some((b) => b.id === book.id)
-        ? prevList.filter((b) => b.id !== book.id)
-        : [...prevList, book],
-    );
-  };
+  const handleAddToCart = (book) => {
+    setCartItem((prev) => {
+      const existing = prev.find((item) => item.book.id === book.id);
+      if (!existing) {
+        return [...prev, { book, quantity: 1 }];
+      }
 
-  console.log("Favoritos", bookFav);
-  console.log("Carrito", bookInPurchase);
+      return prev.map((item) =>
+        item.book.id === book.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
+      );
+    });
+  };
+  const handleRemoveFromCart = (book) => {
+    setCartItem((prev) => prev.filter((item) => item.book.id !== book.id));
+  };
 
   return (
     <>
       <Header
-        bookFav={bookFav}
-        booksInPurchase={bookInPurchase}
-        onTogglePurchase={handleTogglePurchased}
+        cartItems={cartItem}
+        onAddToCart={handleAddToCart}
+        onRemoveFromCart={handleRemoveFromCart}
       />
       <div className="page-container">
         <Routes>
@@ -43,9 +50,9 @@ function App() {
             element={
               <BooksPage
                 bookFav={bookFav}
-                booksInPurchase={bookInPurchase}
+                cartItems={cartItem}
                 onToggleFav={handleToggleFav}
-                onTogglePurchase={handleTogglePurchased}
+                onAddToCart={handleAddToCart}
               />
             }
           />
@@ -54,9 +61,9 @@ function App() {
             element={
               <FavBookPage
                 bookFav={bookFav}
-                booksInPurchase={bookInPurchase}
+                cartItems={cartItem}
                 onToggleFav={handleToggleFav}
-                onTogglePurchase={handleTogglePurchased}
+                onAddToCart={handleAddToCart}
               />
             }
           />

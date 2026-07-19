@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
-export function Header({ booksInPurchase = [], onTogglePurchase }) {
+export function Header({ cartItems = [], onRemoveFromCart }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleToggleCart = () => {
     setIsCartOpen((prev) => !prev);
   };
 
-  const cartCount = booksInPurchase.length;
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const isCartEmpty = cartCount === 0;
 
   return (
@@ -37,11 +37,11 @@ export function Header({ booksInPurchase = [], onTogglePurchase }) {
               {isCartEmpty ? (
                 <p className="cart-empty">Tu carrito está vacío</p>
               ) : (
-                booksInPurchase.map((book) => (
+                cartItems.map((item) => (
                   <PurchaseCard
-                    key={book.id}
-                    book={book}
-                    onRemove={onTogglePurchase}
+                    key={item.book.id}
+                    item={item}
+                    onRemove={onRemoveFromCart}
                   />
                 ))
               )}

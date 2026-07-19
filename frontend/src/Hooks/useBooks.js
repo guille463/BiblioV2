@@ -28,12 +28,25 @@ export function useBooks() {
       return;
     }
     try {
-      const { data } = await BookServices.getBookByName(query);
+      const { data } = await BookServices.getBookbyInfo(query);
       setSearchResults(data);
     } catch (err) {
       setError(err.response?.data?.message ?? "Error in search");
     }
   };
+
+  //  const searchBooks = async (query) => {
+  //   if (!query) {
+  //     setSearchResults([]);
+  //     return;
+  //   }
+  //   try {
+  //     const { data } = await BookServices.getBookByName(query);
+  //     setSearchResults(data);
+  //   } catch (err) {
+  //     setError(err.response?.data?.message ?? "Error in search");
+  //   }
+  // };
 
   const purchaseBooks = async (id) => {
     try {

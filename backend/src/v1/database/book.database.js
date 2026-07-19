@@ -31,13 +31,21 @@ export const removeBookById = async (id) => {
 };
 
 /**
- * @param {{title:string, author:string, isbn:string, genre:string, year:number, stock:number}} data
+ * @param {{title:string, author:string, isbn:string, genre:string, year:number, stock:number price: number}} data
  * @returns {Promise<Object>} Libro creado
  */
 export const insertBook = async (data) => {
   const { rows } = await pool.query(
-    "INSERT INTO books (title, author, isbn, genre, year, stock) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [data.title, data.author, data.isbn, data.genre, data.year, data.stock],
+    "INSERT INTO books (title, author, isbn, genre, year, stock, price) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [
+      data.title,
+      data.author,
+      data.isbn,
+      data.genre,
+      data.year,
+      data.stock,
+      data.price,
+    ],
   );
   return rows[0];
 };
@@ -49,8 +57,17 @@ export const insertBook = async (data) => {
  */
 export const updateBookById = async (id, data) => {
   const { rows } = await pool.query(
-    "UPDATE books SET title = $1, author = $2, isbn = $3, genre = $4, year = $5, stock = $6 WHERE id = $7 RETURNING *",
-    [data.title, data.author, data.isbn, data.genre, data.year, data.stock, id],
+    "UPDATE books SET title = $1, author = $2, isbn = $3, genre = $4, year = $5, stock = $6, price = $7 WHERE id = $8 RETURNING *",
+    [
+      data.title,
+      data.author,
+      data.isbn,
+      data.genre,
+      data.year,
+      data.stock,
+      data.price,
+      id,
+    ],
   );
   return rows[0] || null;
 };

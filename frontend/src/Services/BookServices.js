@@ -1,6 +1,7 @@
 import axiosClient from "../api/axiosClient.js";
 
 export const BookServices = {
+  //LIBROS
   //GET
   getAll: (signal) => axiosClient.get("/books", { signal }),
   getById: (id) => axiosClient.get(`/books/${id}`),
@@ -14,4 +15,8 @@ export const BookServices = {
     axiosClient.put(`/books/buy/${id}`, { quantity }),
   //DELETE
   removeBook: (id) => axiosClient.delete(`/books/${id}`),
+
+  //COMPRAS
+  //POST
+  createOrder: (items) => axiosClient.post(`/order/`, { items }),
 };

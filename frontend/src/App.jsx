@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useBooks } from "./hooks/useBooks";
 import { BookServices } from "./services/BookServices";
 import { Header } from "./components/Header";
 import { BooksPage } from "./pages/BookPage";
@@ -8,15 +9,26 @@ import { FavBookPage } from "./pages/FavBookPage";
 import { IndexPage } from "./pages/IndexPage";
 
 function App() {
-  const [bookFav, setBookFav] = useState([]);
+  const [favIsbns, setFavIsbns] = useState([]);
   const [cartItem, setCartItem] = useState([]);
-  const [checkoutErrors, setCheckoutErrors] = useState([]);
+  const [checkoutError, setCheckoutError] = useState(null);
+
+  const {
+    books,
+    searchResults,
+    loading,
+    error,
+    searchBooks,
+    applyUpdatedBooks,
+  } = useBooks();
+
+  const favBooks = books.filter((book) => favIsbns.includes(book.isbn));
 
   const handleToggleFav = (book) => {
-    setBookFav((prevList) =>
-      prevList.some((b) => b.isbn === book.isbn)
-        ? prevList.filter((b) => b.isbn !== book.isbn)
-        : [...prevList, book],
+    setFavIsbns((prev) =>
+      prev.includes(book.isbn)
+        ? prev.filter((isbn) => isbn !== book.isbn)
+        : [...prev, book.isbn],
     );
   };
 
@@ -56,35 +68,29 @@ function App() {
 
   const handlePurchaseBooks = async () => {
     if (cartItem.length === 0) return;
-    setCheckoutErrors([]);
+    setCheckoutError(null);
 
-    const failures = [];
+    const items = cartItem.map((item) => ({
+      bookId: item.book.id,
+      quantity: item.quantity,
+    }));
 
-    for (const item of cartItem) {
-      try {
-        await BookServices.purchaseBook(item.book.id, item.quantity);
-      } catch (err) {
-        failures.push({
-          bookId: item.book.id,
-          title: item.book.title,
-          message: err.response?.data?.error ?? "Error en la compra",
-        });
-      }
+    try {
+      const { data } = await BookServices.createOrder(items);
+      applyUpdatedBooks(data.books);
+      setCartItem([]);
+    } catch (err) {
+      setCheckoutError(
+        err.response?.data?.error ?? "Error al realizar el pedido",
+      );
     }
-
-    setCartItem((prev) =>
-      prev.filter((item) =>
-        failures.some((fail) => fail.bookId === item.book.id),
-      ),
-    );
-    setCheckoutErrors(failures);
   };
 
   return (
     <>
       <Header
         cartItems={cartItem}
-        checkoutErrors={checkoutErrors}
+        checkoutError={checkoutError}
         onAddToCart={handleAddToCart}
         onRemoveFromCart={handleRemoveFromCart}
         onRemoveOneFromCart={handleRemoveOneFromCart}
@@ -97,7 +103,12 @@ function App() {
             path="/books"
             element={
               <BooksPage
-                bookFav={bookFav}
+                books={books}
+                searchResults={searchResults}
+                loading={loading}
+                error={error}
+                searchBooks={searchBooks}
+                favIsbns={favIsbns}
                 cartItems={cartItem}
                 onToggleFav={handleToggleFav}
                 onAddToCart={handleAddToCart}
@@ -108,7 +119,7 @@ function App() {
             path="/books/favs"
             element={
               <FavBookPage
-                bookFav={bookFav}
+                favBooks={favBooks}
                 cartItems={cartItem}
                 onToggleFav={handleToggleFav}
                 onAddToCart={handleAddToCart}
@@ -119,7 +130,7 @@ function App() {
             path="/books/:id"
             element={
               <BookDetailPage
-                bookFav={bookFav}
+                favIsbns={favIsbns}
                 cartItems={cartItem}
                 onToggleFav={handleToggleFav}
                 onAddToCart={handleAddToCart}

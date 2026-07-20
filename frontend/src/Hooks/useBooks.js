@@ -4,7 +4,6 @@ import { BookServices } from "../services/BookServices";
 export function useBooks() {
   const [books, setBooks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [purchasedBooks, setPurchasedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,7 +28,7 @@ export function useBooks() {
   }, []);
 
   const searchBooks = async (query) => {
-    setError(null);
+    setError(null); // limpia errores de intentos anteriores
 
     if (!query) {
       setSearchResults([]);
@@ -38,7 +37,7 @@ export function useBooks() {
 
     setLoading(true);
     try {
-      const { data } = await BookServices.getBookbyInfo(query);
+      const { data } = await BookServices.getBookByName(query);
       setSearchResults(data);
     } catch (err) {
       setError(err.response?.data?.message ?? "Error in search");
@@ -47,26 +46,18 @@ export function useBooks() {
     }
   };
 
-  const purchaseBooks = async (id, quantity = 1) => {
-    setError(null);
-    try {
-      const { data } = await BookServices.purchaseBook(id, quantity);
-      setBooks((prev) =>
-        prev.map((book) => (book.id === data.id ? data : book)),
-      );
-      setPurchasedBooks((prev) => [...prev, data]);
-    } catch (err) {
-      setError(err.response?.data?.error ?? "Error in purchase");
-    }
+  const applyUpdatedBooks = (updatedBooks) => {
+    setBooks((prev) =>
+      prev.map((book) => updatedBooks.find((u) => u.id === book.id) ?? book),
+    );
   };
 
   return {
     books,
     searchResults,
-    purchasedBooks,
     loading,
     error,
     searchBooks,
-    purchaseBooks,
+    applyUpdatedBooks,
   };
 }

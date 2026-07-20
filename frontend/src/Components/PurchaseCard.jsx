@@ -2,6 +2,7 @@ import "./PurchaseCard.css";
 
 export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
   const { book, quantity } = item;
+  const maxReached = quantity >= book.stock;
 
   return (
     <article className="purchase-card">
@@ -17,13 +18,16 @@ export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
       <span className="purchase-card-quantity">x{quantity}</span>
       <button
         className="purchase-button-addOne"
+        disabled={maxReached}
         onClick={() => onAddToCart(book)}
+        aria-label={`Añadir una unidad de ${book.title}`}
       >
         +
       </button>
       <button
         className="purchase-button-removeOne"
         onClick={() => onRemoveOne(book)}
+        aria-label={`Quitar una unidad de ${book.title}`}
       >
         -
       </button>

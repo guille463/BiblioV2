@@ -4,7 +4,7 @@ import { pool } from "../db.js";
  * @returns {Promise<Array<Object>>} Todas las filas de books
  */
 export const findAllBooks = async () => {
-  const { rows } = await pool.query("SELECT * FROM books");
+  const { rows } = await pool.query("SELECT * FROM books ORDER BY id");
   return rows;
 };
 
@@ -74,7 +74,7 @@ export const updateBookById = async (id, data) => {
 //BuscarLibro por nombre, titulo o isbn
 export const searchBook = async (query) => {
   const { rows } = await pool.query(
-    "SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE  $1 OR isbn ILIKE $1 OR genre ILIKE $1",
+    "SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1 OR isbn ILIKE $1 OR genre ILIKE $1 ORDER BY id",
     [`%${query}%`],
   );
   return rows;

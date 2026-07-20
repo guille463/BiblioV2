@@ -4,10 +4,12 @@ import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
 export function Header({
-  cartItems = [],
+  cartItems,
+  checkoutError,
+  onAddToCart,
   onRemoveFromCart,
   onRemoveOneFromCart,
-  onAddToCart,
+  onPurchase,
 }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -42,16 +44,23 @@ export function Header({
               {isCartEmpty ? (
                 <p className="cart-empty">Tu carrito está vacío</p>
               ) : (
-                cartItems.map((item) => (
-                  <PurchaseCard
-                    key={item.book.id}
-                    item={item}
-                    onAddToCart={onAddToCart}
-                    onRemove={onRemoveFromCart}
-                    onRemoveOne={onRemoveOneFromCart}
-                  />
-                ))
+                <>
+                  {cartItems.map((item) => (
+                    <PurchaseCard
+                      key={item.book.id}
+                      item={item}
+                      onAddToCart={onAddToCart}
+                      onRemove={onRemoveFromCart}
+                      onRemoveOne={onRemoveOneFromCart}
+                    />
+                  ))}
+                  <button className="cart-buy-button" onClick={onPurchase}>
+                    Comprar
+                  </button>
+                </>
               )}
+
+              {checkoutError && <p className="cart-error">{checkoutError}</p>}
             </div>
           )}
         </div>

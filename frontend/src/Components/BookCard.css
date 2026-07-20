@@ -12,10 +12,6 @@
     transform 0.2s ease;
 }
 
-.book-card-link {
-  text-decoration: none;
-}
-
 .book-card:hover {
   box-shadow: 0 8px 20px rgba(30, 42, 34, 0.12);
   transform: translateY(-3px);
@@ -52,6 +48,14 @@
   margin: 0 0 0.25rem;
 }
 
+.book-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.book-card-title a:hover {
+  text-decoration: underline;
+}
 .book-card-author {
   color: #1e5c46;
   font-weight: 600;

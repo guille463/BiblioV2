@@ -49,13 +49,13 @@ export const searchBook = async (query) => {
 //   return book;
 // };
 
-export const decreaseStock = async (id) => {
+export const decreaseStock = async (id, quantity) => {
   const book = await booksDatabase.findBookById(id);
 
   if (!book) {
     throw { code: "BOOK_NOT_FOUND" };
   }
-  const resultStock = await booksDatabase.putpurchaseBook(id);
+  const resultStock = await booksDatabase.putpurchaseBook(id, quantity);
   if (!resultStock) {
     throw { code: "OUT_OF_STOCK" };
   }

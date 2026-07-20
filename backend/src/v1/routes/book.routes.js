@@ -12,7 +12,7 @@ router.get("/books/find/:query", bookControllers.searchBook);
 // // GET libro por título
 // router.get("/books/title/:title", bookControllers.getBookByName);
 
-// PUT restar stock (purchase) — específica antes que /books/:id
+// PUT restar stock (purchase)
 router.put("/books/buy/:id", bookControllers.purchaseBook);
 
 // GET libro por ID

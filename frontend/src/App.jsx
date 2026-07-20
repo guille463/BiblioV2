@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { BooksPage } from "./pages/BookPage";
+import { BookDetailPage } from "./pages/BookDetailPage";
 import { FavBookPage } from "./pages/FavBookPage";
 import { IndexPage } from "./pages/IndexPage";
 
@@ -73,6 +74,17 @@ function App() {
             path="/books/favs"
             element={
               <FavBookPage
+                bookFav={bookFav}
+                cartItems={cartItem}
+                onToggleFav={handleToggleFav}
+                onAddToCart={handleAddToCart}
+              />
+            }
+          />
+          <Route
+            path="/books/:id"
+            element={
+              <BookDetailPage
                 bookFav={bookFav}
                 cartItems={cartItem}
                 onToggleFav={handleToggleFav}

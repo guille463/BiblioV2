@@ -1,5 +1,6 @@
 import "./BookCard.css";
 import { FavEmoji } from "../utils/Emojis";
+import { Link } from "react-router-dom";
 
 export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
   const isAvailable = book.stock > 0;
@@ -9,24 +10,27 @@ export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
 
   return (
     <article className="book-card">
-      <header className="book-card-header">
-        <img
-          className="book-card-img"
-          src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
-          alt={book.title}
-        />
-        <div className="book-card-info">
-          <h3 className="book-card-title">Titulo: {book.title}</h3>
-          <p className="book-card-author">Autor/a: {book.author}</p>
-          <ul className="book-list-info">
-            {/* <li className="book-card-genre">Genero: {book.genre}</li>
+      <Link to={`/books/${book.id}`} className="book-card-link">
+        <header className="book-card-header">
+          <img
+            className="book-card-img"
+            src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
+            alt={book.title}
+          />
+          <div className="book-card-info">
+            <h3 className="book-card-title">Titulo: {book.title}</h3>
+            <p className="book-card-author">Autor/a: {book.author}</p>
+            <ul className="book-list-info">
+              {/* <li className="book-card-genre">Genero: {book.genre}</li>
             <li className="book-card-year">Año: {book.year}</li> */}
-            <li className="book-card-stock">Stock: {book.stock}</li>
-            <li className="book-card-stock-info">Estado: {textAvailable}</li>
-          </ul>
-          <span className="book-card-price"> Precio: {book.price} €</span>
-        </div>
-      </header>
+              <li className="book-card-stock">Stock: {book.stock}</li>
+              <li className="book-card-stock-info">Estado: {textAvailable}</li>
+            </ul>
+            <span className="book-card-price"> Precio: {book.price} €</span>
+          </div>
+        </header>
+      </Link>
+
       <aside>
         <button className="fav-button" onClick={() => onToggleFav(book)}>
           {favText}

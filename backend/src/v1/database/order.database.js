@@ -7,7 +7,7 @@ export const insertOrder = async (items) => {
     await client.query("BEGIN");
     const updatedBooks = [];
 
-    for (const { booKId, quantity } of items) {
+    for (const { bookId, quantity } of items) {
       const result = await client.query(
         "UPDATE books SET stock = stock - $2 WHERE id = $1 AND stock >= $2 RETURNING *",
         [bookId, quantity],

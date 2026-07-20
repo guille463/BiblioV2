@@ -1,6 +1,4 @@
-// orders.controller.js
-import * as ordersServices from "../services/order.services.js";
-
+import * as ordersServices from "../services/order.service.js";
 export const postOrder = async (req, res) => {
   const { items } = req.body;
 

@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
-import { useBooks } from "../hooks/useBooks";
 import { BookCard } from "../components/BookCard";
 import { leftPage, rightPage } from "../utils/Emojis";
 import "./BookPage.css";
 
 export function BooksPage({
-  bookFav,
-  cartItem = [],
+  books,
+  searchResults,
+  loading,
+  error,
+  searchBooks,
+  favIsbns,
+  cartItems = [],
   onToggleFav,
   onAddToCart,
 }) {
   const inputRef = useRef();
-
-  const { books, searchResults, loading, error, searchBooks } = useBooks();
 
   /**
    * @param search se trata de la informacion que va a ir en la barra de busqueda como texto
@@ -30,15 +32,10 @@ export function BooksPage({
     startIndex + BOOKS_PER_PAGE,
   );
 
-  /**
-   * Funcion para buscar libro en la barra de busqueda
-   * @param query es el valor del input del usuario, pasara a ser la informacion que se va a buscar por el usuario (@param search)
-   * @param inputRef va a ser la referencia del input para poder manejarlo y extraer el valor
-   * @function searchBooks esta funcion dentro de nuestros hooks recibira como parametro la informacion que el usuario quiera buscar
-   */
   const handleSearch = () => {
     const query = inputRef.current.value;
     setSearch(query);
+    setCurrentPage(1);
     searchBooks(query);
   };
 
@@ -91,11 +88,12 @@ export function BooksPage({
           <BookCard
             key={book.id}
             book={book}
-            isFav={bookFav.some((b) => b.isbn === book.isbn)}
-            isOnPur={cartItem.some((item) => item.book.id === book.id)}
+            isFav={favIsbns.includes(book.isbn)}
+            cartQuantity={
+              cartItems.find((item) => item.book.id === book.id)?.quantity ?? 0
+            }
             onToggleFav={onToggleFav}
             onAddToCart={onAddToCart}
-            cartQuantity={cartItem ? cartItem.quantity : 0}
           />
         ))}
       </div>

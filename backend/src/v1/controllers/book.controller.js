@@ -114,18 +114,25 @@ export const updateBook = async (req, res) => {
  * @param {import('express).Request} res - book
  */
 export const purchaseBook = async (req, res) => {
+  const { id } = req.params;
+  const quantity = Number(req.body.quantity);
+
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    return res.status(400).json({ error: "Cantidad no valida" });
+  }
+
   try {
-    const book = await bookServices.decreaseStock(req.params.id);
-    res.json(book);
-  } catch (error) {
-    if (error.code === "BOOK_NOT_FOUND") {
-      return res.status(404).json({ error: "Book not found" });
+    const updated = await bookServices.decreaseStock(id, quantity);
+    res.json(updated);
+  } catch (err) {
+    if (err.code === "BOOK_NOT_FOUND") {
+      return res.status(404).json({ error: err.message });
     }
-    if (error.code === "OUT_OF_STOCK") {
-      return res.status(409).json({ error: "Out of stock" });
+    if (err.code === "OUT_OF_STOCK") {
+      return res.status(409).json({ error: err.message });
     }
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error(err);
+    res.status(500).json({ error: "Error interno" });
   }
 };
 

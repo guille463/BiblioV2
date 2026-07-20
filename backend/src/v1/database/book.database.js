@@ -91,10 +91,10 @@ export const searchBook = async (query) => {
 
 //CAMBIAR el titulo por id
 
-export const putpurchaseBook = async (id) => {
+export const putpurchaseBook = async (id, quantity) => {
   const result = await pool.query(
-    "UPDATE books SET stock = stock - 1 WHERE id = $1 AND stock > 0 RETURNING *",
-    [id],
+    "UPDATE books SET stock = stock - $2 WHERE id = $1 AND stock >= $2 RETURNING *",
+    [id, quantity],
   );
   return result.rows[0] || null;
 };

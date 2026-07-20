@@ -2,7 +2,7 @@ import axiosClient from "../api/axiosClient.js";
 
 export const BookServices = {
   //GET
-  getAll: () => axiosClient.get("/books"),
+  getAll: (signal) => axiosClient.get("/books", { signal }),
   getById: (id) => axiosClient.get(`/books/${id}`),
   getBookbyInfo: (data) => axiosClient.get(`/books/find/${data}`),
   //getBookByName: (title) => axiosClient.get(`/books/title/${title}`),
@@ -10,7 +10,8 @@ export const BookServices = {
   createBook: (data) => axiosClient.post("/books", data),
   //PUT
   updateBook: (id, data) => axiosClient.put(`/books/${id}`, data),
-  purchaseBook: (id) => axiosClient.put(`/books/buy/${id}`),
+  purchaseBook: (id, quantity = 1) =>
+    axiosClient.put(`/books/buy/${id}`, { quantity }),
   //DELETE
   removeBook: (id) => axiosClient.delete(`/books/${id}`),
 };

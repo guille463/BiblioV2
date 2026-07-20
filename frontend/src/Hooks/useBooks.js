@@ -9,48 +9,48 @@ export function useBooks() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchBooks = async () => {
       try {
-        const { data } = await BookServices.getAll();
+        const { data } = await BookServices.getAll(controller.signal);
         setBooks(data);
       } catch (err) {
-        setError(err.response?.data?.message ?? "Error searching books");
+        if (err.name !== "CanceledError") {
+          setError(err.response?.data?.message ?? "Error searching books");
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchBooks();
+
+    return () => controller.abort();
   }, []);
 
   const searchBooks = async (query) => {
+    setError(null);
+
     if (!query) {
       setSearchResults([]);
       return;
     }
+
+    setLoading(true);
     try {
       const { data } = await BookServices.getBookbyInfo(query);
       setSearchResults(data);
     } catch (err) {
       setError(err.response?.data?.message ?? "Error in search");
+    } finally {
+      setLoading(false);
     }
   };
 
-  //  const searchBooks = async (query) => {
-  //   if (!query) {
-  //     setSearchResults([]);
-  //     return;
-  //   }
-  //   try {
-  //     const { data } = await BookServices.getBookByName(query);
-  //     setSearchResults(data);
-  //   } catch (err) {
-  //     setError(err.response?.data?.message ?? "Error in search");
-  //   }
-  // };
-
-  const purchaseBooks = async (id) => {
+  const purchaseBooks = async (id, quantity = 1) => {
+    setError(null);
     try {
-      const { data } = await BookServices.purchaseBook(id);
+      const { data } = await BookServices.purchaseBook(id, quantity);
       setBooks((prev) =>
         prev.map((book) => (book.id === data.id ? data : book)),
       );
@@ -60,13 +60,10 @@ export function useBooks() {
     }
   };
 
-  useEffect(() => {
-    console.log("comprados:", purchasedBooks);
-  }, [purchasedBooks]);
-
   return {
     books,
     searchResults,
+    purchasedBooks,
     loading,
     error,
     searchBooks,

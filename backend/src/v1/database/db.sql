@@ -10,6 +10,18 @@ CREATE TABLE books (
     price DECIMAL (10, 2) NOT NULL
 );
 
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE order_items (
+  order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  book_id INTEGER NOT NULL REFERENCES books(id),
+  quantity INTEGER NOT NULL CHECK (quantity >= 1),
+  PRIMARY KEY (order_id, book_id)
+);
+
 
 --DATOS PRUEBA LIBROS
 INSERT INTO books (title, author, isbn, genre, year, stock, price) VALUES

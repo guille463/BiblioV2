@@ -9,9 +9,7 @@ export function BooksPage({
   loading,
   error,
   searchBooks,
-  favIsbns,
   cartItems = [],
-  onToggleFav,
   onAddToCart,
 }) {
   const inputRef = useRef();
@@ -88,11 +86,9 @@ export function BooksPage({
           <BookCard
             key={book.id}
             book={book}
-            isFav={favIsbns.includes(book.isbn)}
             cartQuantity={
               cartItems.find((item) => item.book.id === book.id)?.quantity ?? 0
             }
-            onToggleFav={onToggleFav}
             onAddToCart={onAddToCart}
           />
         ))}

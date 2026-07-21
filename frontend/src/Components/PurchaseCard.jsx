@@ -1,6 +1,8 @@
+import { useBooksDispatch } from "../context/books-context";
 import "./PurchaseCard.css";
 
-export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
+export function PurchaseCard({ item }) {
+  const dispatch = useBooksDispatch();
   const { book, quantity } = item;
   const maxReached = quantity >= book.stock;
 
@@ -19,22 +21,24 @@ export function PurchaseCard({ item, onRemove, onRemoveOne, onAddToCart }) {
       <button
         className="purchase-button-addOne"
         disabled={maxReached}
-        onClick={() => onAddToCart(book)}
+        onClick={() => dispatch({ type: "ADD_TO_CART", book })}
         aria-label={`Añadir una unidad de ${book.title}`}
       >
         +
       </button>
       <button
         className="purchase-button-removeOne"
-        onClick={() => onRemoveOne(book)}
-        aria-label={`Quitar una unidad de ${book.title}`}
+        onClick={() => dispatch({ type: "REMOVE_ONE_FROM_CART", book })}
       >
         -
       </button>
       <span className="purchase-card-price">
         {(Number(book.price) * quantity).toFixed(2)} €
       </span>
-      <button className="purchase-card-remove" onClick={() => onRemove(book)}>
+      <button
+        className="purchase-card-remove"
+        onClick={() => dispatch({ type: "REMOVE_FROM_CART", book })}
+      >
         Quitar
       </button>
     </article>

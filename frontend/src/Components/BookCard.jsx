@@ -1,8 +1,16 @@
 import "./BookCard.css";
 import { FavEmoji } from "../utils/Emojis";
 import { Link } from "react-router-dom";
+import { useBooksState, useBooksDispatch } from "../context/books-context";
 
-export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
+// export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
+
+export function BookCard({ book }) {
+  const { favIsbns, cart } = useBooksState();
+  const dispatch = useBooksDispatch();
+
+  const isFav = favIsbns.includes(book.isbn);
+  const isOnPur = cart.some((item) => item.book.id === book.id);
   const isAvailable = book.stock > 0;
   const textAvailable = isAvailable ? "Disponible" : "No Disponible";
   const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
@@ -32,13 +40,16 @@ export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
       </Link>
 
       <aside>
-        <button className="fav-button" onClick={() => onToggleFav(book)}>
+        <button
+          className="fav-button"
+          onClick={() => dispatch({ type: "TOGGLE_FAV", isbn: book.isbn })}
+        >
           {favText}
         </button>
         <button
           className="purchase-button"
           disabled={!isAvailable}
-          onClick={() => onAddToCart(book)}
+          onClick={() => dispatch({ type: "ADD_TO_CART", book })}
         >
           {purchaseTextButton}
         </button>

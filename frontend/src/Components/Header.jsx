@@ -1,23 +1,18 @@
 import { useState } from "react";
+import { useBooksState } from "../context/books-context";
 import { Link } from "react-router-dom";
 import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
-export function Header({
-  cartItems,
-  checkoutError,
-  onAddToCart,
-  onRemoveFromCart,
-  onRemoveOneFromCart,
-  onPurchase,
-}) {
+export function Header({ checkoutError, onPurchase }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cart } = useBooksState();
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleToggleCart = () => {
     setIsCartOpen((prev) => !prev);
   };
 
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const isCartEmpty = cartCount === 0;
 
   return (
@@ -45,14 +40,8 @@ export function Header({
                 <p className="cart-empty">Tu carrito está vacío</p>
               ) : (
                 <>
-                  {cartItems.map((item) => (
-                    <PurchaseCard
-                      key={item.book.id}
-                      item={item}
-                      onAddToCart={onAddToCart}
-                      onRemove={onRemoveFromCart}
-                      onRemoveOne={onRemoveOneFromCart}
-                    />
+                  {cart.map((item) => (
+                    <PurchaseCard key={item.book.id} item={item} />
                   ))}
                   <button className="cart-buy-button" onClick={onPurchase}>
                     Comprar

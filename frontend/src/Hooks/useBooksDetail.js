@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { BookServices } from "../services/BookServices";
 
-export function DetailBook(id) {
+export function useBookDetail(id) {
   const [book, setBook] = useState(null);
-  const { loading, setLoading } = useState(true);
-  const [error, setError] = useState(null);
+  const [loadingDetail, setLoadingDetail] = useState(true);
+  const [errorDetail, setErrorDetail] = useState(null);
 
   useEffect(() => {
     if (!id) {
       return;
     }
     const controller = new AbortController();
-    setLoading(true);
 
     const fetchBook = async () => {
+      setLoadingDetail(true);
       try {
         const { data } = await BookServices.getById(id, {
           signal: controller.signal,
@@ -21,16 +21,16 @@ export function DetailBook(id) {
         setBook(data);
       } catch (error) {
         if (error.name !== "CanceledError") {
-          setError(error.response?.data?.message ?? "Error loading book");
+          setErrorDetail(error.response?.data?.message ?? "Error loading book");
         }
       } finally {
-        setLoading(false);
+        setLoadingDetail(false);
       }
     };
 
     fetchBook();
-    return () => controller.abort;
+    return () => controller.abort();
   }, [id]);
 
-  return [book, loading, error];
+  return { book, loadingDetail, errorDetail };
 }

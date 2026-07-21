@@ -1,26 +1,36 @@
-export function BookDetailPage({
-  bookFav,
-  cartItem = [],
-  onToggleFav,
-  onAddToCart,
-}) {
-  //   const { books, loading, error } = useBooks();
-  //   return (
-  //     <main className="books-page">
-  //       <h2 className="books-page-title">Libros</h2>
-  //       {loading && <p>Cargando libros...</p>}
-  //       {error && <p className="books-error">{error}</p>}
-  //       <div className="books-grid">
-  //         <BookCardDetail
-  //           key={book.id}
-  //           book={book}
-  //           isFav={bookFav.some((b) => b.isbn === book.isbn)}
-  //           isOnPur={cartItem.some((item) => item.book.id === book.id)}
-  //           onToggleFav={onToggleFav}
-  //           onAddToCart={onAddToCart}
-  //           cartQuantity={cartItem ? cartItem.quantity : 0}
-  //         />
-  //       </div>
-  //     </main>
-  //   );
+import { useParams } from "react-router-dom";
+import { useBookDetail } from "../hooks/useBooksDetail";
+import { useBooksState, useBooksDispatch } from "../context/books-context";
+import { BookCardDetail } from "../components/BookCardDetail";
+
+export function BookDetailPage() {
+  const { id } = useParams();
+  const { book, loadingDetail, errorDetail } = useBookDetail(id);
+  const { favIsbns, cart } = useBooksState();
+  const dispatch = useBooksDispatch();
+
+  if (loadingDetail) {
+    return <p>Cargando Libro...</p>;
+  }
+
+  if (errorDetail) {
+    return <p>{errorDetail}</p>;
+  }
+
+  if (!book) {
+    return null;
+  }
+
+  const isFav = favIsbns.includes(book.isbn);
+  const isOnPur = cart.some((item) => item.book.id === book.id);
+
+  return (
+    <BookCardDetail
+      book={book}
+      isFav={isFav}
+      isOnPur={isOnPur}
+      onToggleFav={() => dispatch({ type: "TOGGLE_FAV", isbn: book.isbn })}
+      onAddToCart={() => dispatch({ type: "ADD_TO_CART", book })}
+    />
+  );
 }

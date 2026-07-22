@@ -17,6 +17,8 @@ function App() {
   const {
     books,
     searchResults,
+    searchLoading,
+    searchError,
     loading,
     error,
     searchBooks,
@@ -57,6 +59,8 @@ function App() {
                 searchResults={searchResults}
                 loading={loading}
                 error={error}
+                searchLoading={searchLoading}
+                searchError={searchError}
                 searchBooks={searchBooks}
               />
             }

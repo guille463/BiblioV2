@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useBooksState } from "../context/books-context";
 import { Link } from "react-router-dom";
+import { useClickOutside } from "../hooks/useClickOutside";
 import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
 export function Header({ checkoutError, onPurchase }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartRef = useRef(null);
   const { cart } = useBooksState();
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   const handleToggleCart = () => {
     setIsCartOpen((prev) => !prev);
   };
+
+  useClickOutside(cartRef, () => setIsCartOpen(false), isCartOpen);
 
   const isCartEmpty = cartCount === 0;
 
@@ -29,7 +33,7 @@ export function Header({ checkoutError, onPurchase }) {
           Favoritos
         </Link>
 
-        <div className="cart-wrapper">
+        <div className="cart-wrapper" ref={cartRef}>
           <button className="cart-button" onClick={handleToggleCart}>
             Carrito ({cartCount})
           </button>

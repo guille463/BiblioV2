@@ -19,10 +19,9 @@ export function useBookDetail(id) {
           signal: controller.signal,
         });
         setBook(data);
-      } catch (error) {
-        if (error.name !== "CanceledError") {
-          setErrorDetail(error.response?.data?.message ?? "Error loading book");
-        }
+      } catch (err) {
+        if (err.name === "CanceledError") return;
+        setErrorDetail(err.message);
       } finally {
         setLoadingDetail(false);
       }

@@ -4,9 +4,11 @@ export const BookServices = {
   //LIBROS
   //GET
   getAll: (config) => axiosClient.get("/books", config),
-  getById: (id, config) => axiosClient.get(`/books/${id}`, config),
   getBookbyInfo: (query, config) =>
-    axiosClient.get(`/books/find/${query}`, config),
+    axiosClient.get("/books", { ...config, params: { search: query } }),
+  getById: (id, config) => axiosClient.get(`/books/${id}`, config),
+  // getBookbyInfo: (query, config) =>
+  //   axiosClient.get(`/books/find/${query}`, config),
   //getBookByName: (title) => axiosClient.get(`/books/title/${title}`),
   //POST
   createBook: (data) => axiosClient.post("/books", data),

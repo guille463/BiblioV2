@@ -7,18 +7,25 @@ import * as bookServices from "../services/book.services.js";
  * @returns {Promise<void>} JSON con array de libros, status 200
  */
 export const getBooks = async (req, res) => {
-  const books = await bookServices.getAllBooks();
-  res.json(books);
-};
-
-export const searchBook = async (req, res) => {
   try {
-    const books = await bookServices.searchBook(req.params.query);
+    const { search } = req.query;
+    const books = search
+      ? await bookServices.searchBook(search)
+      : await bookServices.getAllBooks();
     res.json(books);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error interno" });
   }
 };
+// export const searchBook = async (req, res) => {
+//   try {
+//     const books = await bookServices.searchBook(req.params.query);
+//     res.json(books);
+//   } catch (error) {
+//     res.status(500).json({ error: "Error interno" });
+//   }
+// };
 
 // export const getBookByName = async (req, res) => {
 //   try {
@@ -138,7 +145,7 @@ export const purchaseBook = async (req, res) => {
 
 export default {
   getBooks,
-  searchBook,
+  //searchBook,
   //getBookByName,
   getBook,
   postBook,

@@ -16,7 +16,7 @@ export const searchBook = async (req, res) => {
     const books = await bookServices.searchBook(req.params.query);
     res.json(books);
   } catch (error) {
-    res.status(500).json({ message: "Internal error" });
+    res.status(500).json({ error: "Error interno" });
   }
 };
 
@@ -42,12 +42,12 @@ export const getBook = async (req, res) => {
   } catch (error) {
     console.error(error);
     if (error.code === "NOT_FOUND") {
-      return res.status(404).json({ message: "Book not found" });
+      return res.status(404).json({ error: "Libro no encontrado" });
     }
     if (error?.code === "22P02") {
-      return res.status(400).json({ message: "Invalid ID" });
+      return res.status(400).json({ error: "ID no valido" });
     }
-    res.status(500).json({ message: "Internal error" });
+    res.status(500).json({ error: "Error interno" });
   }
 };
 
@@ -63,12 +63,12 @@ export const deleteBook = async (req, res) => {
     res.json(book);
   } catch (error) {
     if (error.code === "NOT_FOUND") {
-      return res.status(404).json({ message: "Book not found" });
+      return res.status(404).json({ error: "Libro no encontrado" });
     }
     if (error.code === "22P02") {
-      return res.status(400).json({ message: "Invalid ID" });
+      return res.status(400).json({ error: "ID no valido" });
     }
-    res.status(500).json({ message: "Internal error" });
+    res.status(500).json({ error: "Error interno" });
   }
 };
 
@@ -83,7 +83,7 @@ export const postBook = async (req, res) => {
     const book = await bookServices.createBook(req.body);
     res.status(201).json(book);
   } catch (error) {
-    res.status(500).json({ message: "Internal error" });
+    res.status(500).json({ error: "Error interno" });
   }
 };
 
@@ -99,12 +99,12 @@ export const updateBook = async (req, res) => {
     res.json(book);
   } catch (error) {
     if (error.code === "NOT_FOUND") {
-      return res.status(404).json({ message: "Book not found" });
+      return res.status(404).json({ error: "Libro no encontrado" });
     }
     if (error.code === "22P02") {
-      return res.status(400).json({ message: "Invalid ID" });
+      return res.status(400).json({ error: "ID no valido" });
     }
-    res.status(500).json({ message: "Internal error" });
+    res.status(500).json({ error: "Error interno" });
   }
 };
 

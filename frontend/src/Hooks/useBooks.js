@@ -21,7 +21,7 @@ export function useBooks() {
         setBooks(data);
       } catch (err) {
         if (err.name !== "CanceledError") {
-          setError(err.response?.data?.message ?? "Error searching books");
+          setError(err.response?.data?.error ?? "Error al cargar los libros");
         }
       } finally {
         setLoading(false);
@@ -61,7 +61,7 @@ export function useBooks() {
         return;
       }
       console.error(err);
-      setSearchError(err.response?.data?.message ?? "Error in search");
+      setSearchError(err.response?.data?.error ?? "Error en la busqueda");
     } finally {
       if (searchControllerRef.current === controller) {
         setSearchLoading(false);

@@ -1,0 +1,23 @@
+.fav-books-page {
+  padding: 2rem 0;
+}
+
+.fav-books-title {
+  font-size: 1.75rem;
+  color: #21302a;
+  margin: 0 0 1.5rem;
+}
+
+.fav-books-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 1rem;
+  color: #6b6a64;
+  font-size: 1.05rem;
+  text-align: center;
+  background: #fdfcfa;
+  border: 1px dashed #e4e0d8;
+  border-radius: 10px;
+}

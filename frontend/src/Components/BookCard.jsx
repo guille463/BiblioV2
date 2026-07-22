@@ -34,9 +34,9 @@ export function BookCard({ book }) {
               <li className="book-card-stock">Stock: {book.stock}</li>
               <li className="book-card-stock-info">Estado: {textAvailable}</li>
             </ul>
-            <span className="book-card-price"> Precio: {book.price} €</span>
           </div>
         </header>
+        <span className="book-card-price"> Precio: {book.price} €</span>
       </Link>
 
       <aside>

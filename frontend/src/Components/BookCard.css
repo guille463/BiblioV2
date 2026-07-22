@@ -2,7 +2,6 @@
   width: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background: #fdfcfa;
   border: 1px solid #e4e0d8;
   border-radius: 10px;
@@ -13,7 +12,11 @@
 }
 
 .book-card-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   text-decoration: none;
+  color: inherit;
 }
 
 .book-card:hover {
@@ -24,6 +27,8 @@
 .book-card-header {
   display: flex;
   gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 1.25rem;
 }
 
 .book-card-img {
@@ -43,6 +48,7 @@
   flex-direction: column;
   gap: 0.15rem;
   min-width: 0;
+  flex: 1;
 }
 
 .book-card-title {
@@ -79,19 +85,20 @@
 .book-card-price {
   display: flex;
   justify-content: center;
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  margin-top: 0.75rem;
-  font-size: 1rem;
+  padding: 0.6rem;
+  margin-top: auto;
+  font-size: 1.05rem;
   font-weight: 700;
-  border: solid 0.5px;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
   color: var(--color-primary);
-  background-color: var(--color--sufcace);
+  background-color: var(--color-surface);
 }
 
 .book-card aside {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .book-card aside button:first-child {

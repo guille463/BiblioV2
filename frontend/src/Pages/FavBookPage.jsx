@@ -1,5 +1,6 @@
 import { BookCard } from "../components/BookCard";
 import "../components/BookCard.css";
+import "../pages/FavBookPage.css";
 
 export function FavBookPage({
   favBooks,

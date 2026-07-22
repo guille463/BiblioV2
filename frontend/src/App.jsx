@@ -39,9 +39,7 @@ function App() {
       applyUpdatedBooks(data.books);
       dispatch({ type: "CLEAR_CART" });
     } catch (err) {
-      setCheckoutError(
-        err.response?.data?.error ?? "Error al realizar el pedido",
-      );
+      setCheckoutError(err.message);
     }
   };
 

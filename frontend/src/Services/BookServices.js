@@ -3,9 +3,10 @@ import axiosClient from "../api/axiosClient.js";
 export const BookServices = {
   //LIBROS
   //GET
-  getAll: (signal) => axiosClient.get("/books", { signal }),
-  getById: (id) => axiosClient.get(`/books/${id}`),
-  getBookbyInfo: (data) => axiosClient.get(`/books/find/${data}`),
+  getAll: (config) => axiosClient.get("/books", config),
+  getById: (id, config) => axiosClient.get(`/books/${id}`, config),
+  getBookbyInfo: (query, config) =>
+    axiosClient.get(`/books/find/${query}`, config),
   //getBookByName: (title) => axiosClient.get(`/books/title/${title}`),
   //POST
   createBook: (data) => axiosClient.post("/books", data),

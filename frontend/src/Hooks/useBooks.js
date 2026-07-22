@@ -1,18 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BookServices } from "../services/BookServices";
 
 export function useBooks() {
   const [books, setBooks] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchError, setSearchError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const searchControllerRef = useRef(null);
 
   useEffect(() => {
     const controller = new AbortController();
 
     const fetchBooks = async () => {
       try {
-        const { data } = await BookServices.getAll(controller.signal);
+        const { data } = await BookServices.getAll({
+          signal: controller.signal,
+        });
         setBooks(data);
       } catch (err) {
         if (err.name !== "CanceledError") {
@@ -27,22 +32,40 @@ export function useBooks() {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    return () => searchControllerRef.current?.abort();
+  }, []);
+
   const searchBooks = async (query) => {
-    setError(null); // limpia errores de intentos anteriores
+    //Cancela la busqueda anterior si sigue
+    searchControllerRef.current?.abort();
+
+    setSearchError(null);
 
     if (!query) {
       setSearchResults([]);
       return;
     }
+    //Controller nuevo para esta busqueda
+    const controller = new AbortController();
+    searchControllerRef.current = controller;
 
-    setLoading(true);
+    setSearchLoading(true);
     try {
-      const { data } = await BookServices.getBookByName(query);
+      const { data } = await BookServices.getBookbyInfo(query, {
+        signal: controller.signal,
+      });
       setSearchResults(data);
     } catch (err) {
-      setError(err.response?.data?.message ?? "Error in search");
+      if (err.name === "CanceledError") {
+        return;
+      }
+      console.error(err);
+      setSearchError(err.response?.data?.message ?? "Error in search");
     } finally {
-      setLoading(false);
+      if (searchControllerRef.current === controller) {
+        setSearchLoading(false);
+      }
     }
   };
 
@@ -57,6 +80,8 @@ export function useBooks() {
     searchResults,
     loading,
     error,
+    searchLoading,
+    searchError,
     searchBooks,
     applyUpdatedBooks,
   };

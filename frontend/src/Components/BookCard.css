@@ -12,6 +12,10 @@
     transform 0.2s ease;
 }
 
+.book-card-link {
+  text-decoration: none;
+}
+
 .book-card:hover {
   box-shadow: 0 8px 20px rgba(30, 42, 34, 0.12);
   transform: translateY(-3px);

@@ -24,6 +24,31 @@
   max-width: 320px;
 }
 
+.books-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 1rem;
+  color: #6b6a64;
+}
+
+.clear-search-button {
+  padding: 0.6rem 1.2rem;
+  border: 1.5px solid #1e5c46;
+  border-radius: 8px;
+  background: transparent;
+  color: #1e5c46;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.clear-search-button:hover {
+  background: #e8f1ed;
+}
+
 .search-button {
   padding: 0.5rem 1rem;
   border: none;

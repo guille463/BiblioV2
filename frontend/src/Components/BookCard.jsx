@@ -3,8 +3,16 @@ import { FavEmoji } from "../utils/Emojis";
 import { Link } from "react-router-dom";
 import { useBooksState, useBooksDispatch } from "../context/books-context";
 
-// export function BookCard({ book, isFav, isOnPur, onToggleFav, onAddToCart }) {
-
+/**
+ * Tarjeta de libro del catálogo.
+ *
+ * Consume favoritos y carrito directamente del contexto en vez de recibirlos
+ * por props: evita atravesar BooksPage y FavBookPage con datos que solo usa
+ * la tarjeta.
+ *
+ * @param {Object} props
+ * @param {Book} props.book
+ */
 export function BookCard({ book }) {
   const { favIsbns, cart } = useBooksState();
   const dispatch = useBooksDispatch();
@@ -29,8 +37,6 @@ export function BookCard({ book }) {
             <h3 className="book-card-title">Titulo: {book.title}</h3>
             <p className="book-card-author">Autor/a: {book.author}</p>
             <ul className="book-list-info">
-              {/* <li className="book-card-genre">Genero: {book.genre}</li>
-            <li className="book-card-year">Año: {book.year}</li> */}
               <li className="book-card-stock">Stock: {book.stock}</li>
               <li className="book-card-stock-info">Estado: {textAvailable}</li>
             </ul>

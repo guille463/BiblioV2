@@ -1,17 +1,33 @@
 import { FavEmoji } from "../utils/Emojis";
+import { useBooksState, useBooksDispatch } from "../context/books-context";
+
 import "./BookCardDetail.css";
 
-export function BookCardDetail({
-  book,
-  isFav,
-  isOnPur,
-  onToggleFav,
-  onAddToCart,
-}) {
+/** @typedef {import('../types.js').Book} Book */
+
+/**
+ * Vista de detalle de un libro.
+ *
+ * Consume favoritos y carrito del contexto, igual que BookCard: la página
+ * solo aporta el libro cargado.
+ *
+ * @param {Object} props
+ * @param {Book} props.book
+ */
+export function BookCardDetail({ book }) {
+  const { favIsbns, cart } = useBooksState();
+  const dispatch = useBooksDispatch();
+
+  const isOnPur = cart.some((item) => item.book.id === book.id);
+  const isFav = favIsbns.includes(book.isbn);
   const isAvailable = book.stock > 0;
   const textAvailable = isAvailable ? "Disponible" : "No Disponible";
   const favText = isFav ? `Me gusta ${FavEmoji}` : "Añadir a mi lista";
   const purchaseTextButton = isOnPur ? "Añadir otro" : "Añadir al carrito";
+
+  const handleToggleFav = () =>
+    dispatch({ type: "TOGGLE_FAV", isbn: book.isbn });
+  const handleAddToCart = () => dispatch({ type: "ADD_TO_CART", book });
 
   return (
     <article className="book-detail-card">
@@ -33,20 +49,17 @@ export function BookCardDetail({
               Estado: {textAvailable}
             </li>
           </ul>
-          <span className="book-detail-card-price">
-            {" "}
-            Precio: {book.price} €
-          </span>
+          <span className="book-detail-card-price">Precio: {book.price} €</span>
         </div>
       </header>
       <aside>
-        <button className="fav-detail-button" onClick={onToggleFav}>
+        <button className="fav-detail-button" onClick={handleToggleFav}>
           {favText}
         </button>
         <button
           className="purchase-detail-button"
           disabled={!isAvailable}
-          onClick={onAddToCart}
+          onClick={handleAddToCart}
         >
           {purchaseTextButton}
         </button>

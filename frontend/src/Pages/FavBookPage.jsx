@@ -2,6 +2,12 @@ import { BookCard } from "../components/BookCard";
 import "../components/BookCard.css";
 import "../pages/FavBookPage.css";
 
+/**
+ * Lista de favoritos.
+ *
+ * @param {Object} props
+ * @param {Book[]} props.favBooks - Ya filtrados en App a partir de favIsbns.
+ */
 export function FavBookPage({
   favBooks,
   cartItems = [],

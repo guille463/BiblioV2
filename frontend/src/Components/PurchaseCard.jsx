@@ -1,6 +1,12 @@
 import { useBooksDispatch } from "../context/books-context";
 import "./PurchaseCard.css";
 
+/**
+ * Línea del carrito en el desplegable del Header.
+ *
+ * @param {Object} props
+ * @param {CartItem} props.item
+ */
 export function PurchaseCard({ item }) {
   const dispatch = useBooksDispatch();
   const { book, quantity } = item;

@@ -3,6 +3,18 @@ import { BookCard } from "../components/BookCard";
 import { leftPage, rightPage } from "../utils/Emojis";
 import "./BookPage.css";
 
+/**
+ * Catálogo con búsqueda y paginación.
+ *
+ * @param {Object} props
+ * @param {Book[]} props.books - Catálogo completo.
+ * @param {Book[]} props.searchResults - Resultados de la última búsqueda.
+ * @param {boolean} props.loading - Carga inicial del catálogo.
+ * @param {string|null} props.error
+ * @param {(query: string) => Promise<void>} props.searchBooks
+ * @param {string|null} props.searchError
+ * @param {boolean} props.searchLoading
+ */
 export function BooksPage({
   books,
   searchResults,
@@ -17,7 +29,7 @@ export function BooksPage({
   const inputRef = useRef(null);
 
   /**
-   * @param search se trata de la informacion que va a ir en la barra de busqueda como texto
+   * `search` guarda el término confirmado
    */
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

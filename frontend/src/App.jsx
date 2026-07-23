@@ -9,6 +9,10 @@ import { BookDetailPage } from "./pages/BookDetailPage";
 import { FavBookPage } from "./pages/FavBookPage";
 import { IndexPage } from "./pages/IndexPage";
 
+/**
+ * Raíz de la aplicación: define las rutas y posee el catálogo.
+ *
+ */
 function App() {
   const [checkoutError, setCheckoutError] = useState(null);
   const { cart, favIsbns } = useBooksState();
@@ -27,6 +31,11 @@ function App() {
 
   const favBooks = books.filter((book) => favIsbns.includes(book.isbn));
 
+  /**
+   * Envía el carrito como pedido único. El backend descuenta el stock.
+   *
+   * @returns {Promise<void>}
+   */
   const handlePurchaseBooks = async () => {
     if (cart.length === 0) return;
     setCheckoutError(null);

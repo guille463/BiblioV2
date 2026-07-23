@@ -5,6 +5,16 @@ import { useClickOutside } from "../hooks/useClickOutside";
 import { PurchaseCard } from "./PurchaseCard";
 import "./Header.css";
 
+/**
+ * Cabecera con navegación y carrito desplegable.
+ *
+ * El carrito se lee del contexto; la compra se delega a App, que es quien
+ * posee el catálogo y debe refrescar el stock tras el pedido.
+ *
+ * @param {Object} props
+ * @param {string|null} props.checkoutError - Mensaje de error del último intento de compra.
+ * @param {() => void} props.onPurchase
+ */
 export function Header({ checkoutError, onPurchase }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);

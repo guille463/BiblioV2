@@ -6,12 +6,6 @@ const router = Router();
 // GET todos los libros
 router.get("/books", bookControllers.getBooks);
 
-// GET libro por busqueda (titulo, isb o autor)
-// router.get("/books/find/:query", bookControllers.searchBook);
-
-// GET libro por título
-// router.get("/books/title/:title", bookControllers.getBookByName);
-
 // PUT restar stock (purchase)
 router.put("/books/buy/:id", bookControllers.purchaseBook);
 

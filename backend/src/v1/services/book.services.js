@@ -1,11 +1,17 @@
 import * as booksDatabase from "../database/book.database.js";
 
-// Sin transformación, pasa directo a la capa de datos
+/**
+ * @returns {Promise<Book[]>}
+ */
 export const getAllBooks = async () => {
   return await booksDatabase.findAllBooks();
 };
 
-// Lanza NOT_FOUND si el array de resultado está vacío
+/**
+ * @param {string|number} id
+ * @returns {Promise<Book>}
+ * @throws {{code: 'NOT_FOUND'}} Si el libro no existe.
+ */
 export const getBookById = async (id) => {
   const book = await booksDatabase.findBookById(id);
   if (!book) {
@@ -14,7 +20,11 @@ export const getBookById = async (id) => {
   return book;
 };
 
-// Lanza NOT_FOUND si no había fila que borrar
+/**
+ * @param {string|number} id
+ * @returns {Promise<Book>} El libro eliminado.
+ * @throws {{code: 'NOT_FOUND'}} Si no había fila que borrar.
+ */
 export const deleteBookById = async (id) => {
   const book = await booksDatabase.removeBookById(id);
   if (!book) {
@@ -23,12 +33,21 @@ export const deleteBookById = async (id) => {
   return book;
 };
 
-// Sin validación de datos antes de insertar
+/**
+ * No valida los datos de entrada: la validación vive en el controlador.
+ * @param {BookInput} data
+ * @returns {Promise<Book>}
+ */
 export const createBook = async (data) => {
   return await booksDatabase.insertBook(data);
 };
 
-// Lanza NOT_FOUND si no había fila que actualizar
+/**
+ * @param {string|number} id
+ * @param {BookInput} data
+ * @returns {Promise<Book>}
+ * @throws {{code: 'NOT_FOUND'}} Si el libro no existe.
+ */
 export const editBookById = async (id, data) => {
   const book = await booksDatabase.updateBookById(id, data);
   if (!book) {
@@ -37,18 +56,26 @@ export const editBookById = async (id, data) => {
   return book;
 };
 
+/**
+ * @param {string} query
+ * @returns {Promise<Book[]>} Array vacío si no hay coincidencias.
+ */
 export const searchBook = async (query) => {
   return await booksDatabase.searchBook(query);
 };
 
-// export const searchBookByName = async (title) => {
-//   const book = await booksDatabase.searchBookByName(title);
-//   if (!book) {
-//     throw { code: "NOT_FOUND" };
-//   }
-//   return book;
-// };
-
+/**
+ * Descuenta stock de un solo libro.
+ *
+ * La comprobación previa con findBookById existe únicamente para distinguir
+ * "no existe" de "sin stock"
+ *
+ * @param {string|number} id
+ * @param {number} quantity - Entero >= 1, validado en el controlador.
+ * @returns {Promise<Book>} El libro con el stock ya descontado.
+ * @throws {{code: 'BOOK_NOT_FOUND'}} Si el libro no existe.
+ * @throws {{code: 'OUT_OF_STOCK'}} Si el stock es insuficiente.
+ */
 export const decreaseStock = async (id, quantity) => {
   const book = await booksDatabase.findBookById(id);
 

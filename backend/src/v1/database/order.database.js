@@ -1,5 +1,18 @@
 import { pool } from "../db.js";
 
+/**
+ * Crea un pedido dentro de una transacción.
+ *
+ * Secuencia: descuenta stock de cada libro -> inserta la cabecera del pedido
+ * -> inserta las líneas. Cualquier fallo hace ROLLBACK completo, de modo que
+ * no queda stock descontado sin pedido asociado.
+ *
+ * Si rowCount es 0 significa que el libro no existe o no hay stock suficiente.
+ *
+ * @param {OrderItem[]} items - Sin ids duplicados (validado en el controlador).
+ * @returns {Promise<OrderResult>}
+ * @throws {{code: 'OUT_OF_STOCK', bookId: number}} Si algún libro no admite el descuento.
+ */
 export const insertOrder = async (items) => {
   const client = await pool.connect();
 

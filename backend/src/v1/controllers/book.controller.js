@@ -1,10 +1,11 @@
 import * as bookServices from "../services/book.services.js";
 
 /**
- * Obtiene todos los libros.
+ * GET /books?search=
+ * Lista todos los libros o filtra por texto si llega `search`.
  * @param {import('express').Request} req
  * @param {import('express').Response} res
- * @returns {Promise<void>} JSON con array de libros, status 200
+ * @returns {Promise<void>} 200 con Book[] | 500 error interno.
  */
 export const getBooks = async (req, res) => {
   try {
@@ -18,23 +19,6 @@ export const getBooks = async (req, res) => {
     res.status(500).json({ error: "Error interno" });
   }
 };
-// export const searchBook = async (req, res) => {
-//   try {
-//     const books = await bookServices.searchBook(req.params.query);
-//     res.json(books);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error interno" });
-//   }
-// };
-
-// export const getBookByName = async (req, res) => {
-//   try {
-//     const book = await bookServices.searchBookByName(req.params.title);
-//     res.json(book);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 /**
  * Obtiene un libro por ID.
@@ -116,9 +100,12 @@ export const updateBook = async (req, res) => {
 };
 
 /**
- * Decrementar vel stock del libro en 1
- * @param {import('express).Request} req - req.params.id: id(libro)
- * @param {import('express).Request} res - book
+ * PUT /books/buy/:id
+ * Descuenta `quantity` unidades del stock de un libro.
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>} 200 con Book actualizado | 400 cantidad no válida
+ *   | 404 libro no encontrado | 409 stock insuficiente | 500 error interno.
  */
 export const purchaseBook = async (req, res) => {
   const { id } = req.params;
@@ -145,8 +132,6 @@ export const purchaseBook = async (req, res) => {
 
 export default {
   getBooks,
-  //searchBook,
-  //getBookByName,
   getBook,
   postBook,
   deleteBook,

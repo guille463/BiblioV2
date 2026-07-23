@@ -1,4 +1,14 @@
 import * as ordersServices from "../services/order.service.js";
+
+/**
+ * POST /order
+ * Crea un pedido con varias líneas. Valida que items sea un array no vacío,
+ * que cada bookId y quantity sean enteros >= 1, y que no haya libros repetidos.
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {Promise<void>} 201 con {order, books} | 400 validación
+ *   | 404 libro no encontrado | 409 stock insuficiente | 500 error interno.
+ */
 export const postOrder = async (req, res) => {
   const { items } = req.body;
 

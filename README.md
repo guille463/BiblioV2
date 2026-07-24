@@ -60,10 +60,10 @@ aplicación: typedefs de las entidades, contratos entre capas y errores lanzados
 
 ## Requisitos del sistema
 
-| Herramienta | Versión mínima | Comprobar con |
-|-------------|----------------|---------------|
-| Node.js     | 20             | `node -v` |
-| pnpm        | 9              | `pnpm -v` |
+| Herramienta | Versión mínima | Comprobar con    |
+| ----------- | -------------- | ---------------- |
+| Node.js     | 20             | `node -v`        |
+| pnpm        | 9              | `pnpm -v`        |
 | PostgreSQL  | 14             | `psql --version` |
 
 Si no tienes pnpm:
@@ -318,30 +318,30 @@ prefijadas en kebab-case (`book-card-*`, `books-page-*`).
 
 ### Tablas
 
-| Tabla | Descripción | Clave primaria |
-|-------|-------------|----------------|
-| `books` | Fondo de la biblioteca | `id` (SERIAL) |
-| `orders` | Cabecera de pedido | `id` (SERIAL) |
-| `order_items` | Líneas de pedido | `(order_id, book_id)` |
+| Tabla         | Descripción            | Clave primaria        |
+| ------------- | ---------------------- | --------------------- |
+| `books`       | Fondo de la biblioteca | `id` (SERIAL)         |
+| `orders`      | Cabecera de pedido     | `id` (SERIAL)         |
+| `order_items` | Líneas de pedido       | `(order_id, book_id)` |
 
 ### Campos de `books`
 
-| Campo | Tipo | Restricción |
-|-------|------|-------------|
-| `title` | `VARCHAR(255)` | `NOT NULL` |
-| `author` | `VARCHAR(255)` | `NOT NULL` |
-| `isbn` | `VARCHAR(13)` | `UNIQUE` |
-| `genre` | `VARCHAR(100)` | — |
-| `year` | `SMALLINT` | — |
-| `stock` | `INT` | `NOT NULL DEFAULT 0` |
-| `price` | `DECIMAL(10,2)` | `NOT NULL` |
+| Campo    | Tipo            | Restricción          |
+| -------- | --------------- | -------------------- |
+| `title`  | `VARCHAR(255)`  | `NOT NULL`           |
+| `author` | `VARCHAR(255)`  | `NOT NULL`           |
+| `isbn`   | `VARCHAR(13)`   | `UNIQUE`             |
+| `genre`  | `VARCHAR(100)`  | —                    |
+| `year`   | `SMALLINT`      | —                    |
+| `stock`  | `INT`           | `NOT NULL DEFAULT 0` |
+| `price`  | `DECIMAL(10,2)` | `NOT NULL`           |
 
 ### Relaciones
 
-| Entidad hijo | Entidad padre | Columna FK | Comportamiento |
-|--------------|---------------|------------|----------------|
-| `order_items` | `orders` | `order_id` | `ON DELETE CASCADE` |
-| `order_items` | `books` | `book_id` |  |
+| Entidad hijo  | Entidad padre | Columna FK | Comportamiento      |
+| ------------- | ------------- | ---------- | ------------------- |
+| `order_items` | `orders`      | `order_id` | `ON DELETE CASCADE` |
+| `order_items` | `books`       | `book_id`  |                     |
 
 `order_items` incluye `CHECK (quantity >= 1)`, de modo que la base de datos
 rechaza líneas vacías aunque la validación de la aplicación fallase.
@@ -354,32 +354,32 @@ Base: `http://localhost:4000/api/v1`
 
 ### Libros — `/books`
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| `GET` | `/books` | Listar todos |
-| `GET` | `/books?search={texto}` | Buscar por título, autor, ISBN o género |
-| `GET` | `/books/{id}` | Obtener por id |
-| `POST` | `/books` | Crear libro |
-| `PUT` | `/books/{id}` | Actualizar libro |
-| `PUT` | `/books/buy/{id}` | Descontar stock de un solo libro |
-| `DELETE` | `/books/{id}` | Eliminar libro |
+| Método   | Ruta                    | Descripción                             |
+| -------- | ----------------------- | --------------------------------------- |
+| `GET`    | `/books`                | Listar todos                            |
+| `GET`    | `/books?search={texto}` | Buscar por título, autor, ISBN o género |
+| `GET`    | `/books/{id}`           | Obtener por id                          |
+| `POST`   | `/books`                | Crear libro                             |
+| `PUT`    | `/books/{id}`           | Actualizar libro                        |
+| `PUT`    | `/books/buy/{id}`       | Descontar stock de un solo libro        |
+| `DELETE` | `/books/{id}`           | Eliminar libro                          |
 
 ### Pedidos — `/order`
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
+| Método | Ruta     | Descripción                                  |
+| ------ | -------- | -------------------------------------------- |
 | `POST` | `/order` | Crear pedido transaccional con varias líneas |
 
 ### Códigos de respuesta
 
-| Código | Significado |
-|--------|-------------|
-| `200` | Operación correcta |
-| `201` | Recurso creado |
-| `400` | Cantidad no válida, items vacíos, libros duplicados o id malformado |
-| `404` | El libro no existe |
-| `409` | Stock insuficiente |
-| `500` | Error interno |
+| Código | Significado                                                         |
+| ------ | ------------------------------------------------------------------- |
+| `200`  | Operación correcta                                                  |
+| `201`  | Recurso creado                                                      |
+| `400`  | Cantidad no válida, items vacíos, libros duplicados o id malformado |
+| `404`  | El libro no existe                                                  |
+| `409`  | Stock insuficiente                                                  |
+| `500`  | Error interno                                                       |
 
 ### Ejemplos
 
@@ -426,12 +426,12 @@ curl -X POST http://localhost:4000/api/v1/order \
 
 ## Frontend — Páginas
 
-| Página | Ruta |
-|--------|------|
-| Inicio | `/` |
-| Catálogo | `/books` |
-| Detalle de libro | `/books/:id` |
-| Favoritos | `/books/favs` |
+| Página           | Ruta          |
+| ---------------- | ------------- |
+| Inicio           | `/`           |
+| Catálogo         | `/books`      |
+| Detalle de libro | `/books/:id`  |
+| Favoritos        | `/books/favs` |
 
 ---
 

@@ -198,8 +198,7 @@ controllers/
 
 Lógica de negocio. Compone operaciones sobre la capa de datos y lanza errores de
 dominio con `code` (`NOT_FOUND`, `BOOK_NOT_FOUND`, `OUT_OF_STOCK`). En el caso de
-los pedidos, distingue entre "el libro no existe" y "no hay stock suficiente",
-algo que la consulta atómica no puede diferenciar por sí sola.
+los pedidos, distingue entre "el libro no existe" y "no hay stock suficiente".
 
 ```
 services/
@@ -278,8 +277,6 @@ hooks/
 #### `components/`
 
 Componentes de presentación. Las tarjetas leen favoritos y carrito del contexto
-en lugar de recibirlos por props, evitando atravesar las páginas con datos que no
-usan.
 
 ```
 components/
@@ -312,9 +309,8 @@ utils/
 #### CSS
 
 `index.css` concentra el reset, los tokens de diseño en `:root` y las utilidades
-de layout. Cada componente y página lleva su `.css` co-localizado, con las clases
-prefijadas en kebab-case (`book-card-*`, `books-page-*`) para evitar colisiones
-sin necesidad de CSS Modules.
+de layout. Cada componente y página lleva su `.css` con las clases
+prefijadas en kebab-case (`book-card-*`, `books-page-*`).
 
 ---
 
@@ -340,15 +336,12 @@ sin necesidad de CSS Modules.
 | `stock` | `INT` | `NOT NULL DEFAULT 0` |
 | `price` | `DECIMAL(10,2)` | `NOT NULL` |
 
-`DECIMAL` llega al cliente como string a través de `pg`, para no perder precisión
-al serializar. La conversión con `Number()` ocurre en el punto de cálculo.
-
 ### Relaciones
 
 | Entidad hijo | Entidad padre | Columna FK | Comportamiento |
 |--------------|---------------|------------|----------------|
 | `order_items` | `orders` | `order_id` | `ON DELETE CASCADE` |
-| `order_items` | `books` | `book_id` | Restringido: preserva el histórico |
+| `order_items` | `books` | `book_id` |  |
 
 `order_items` incluye `CHECK (quantity >= 1)`, de modo que la base de datos
 rechaza líneas vacías aunque la validación de la aplicación fallase.
@@ -444,7 +437,7 @@ curl -X POST http://localhost:4000/api/v1/order \
 
 ## Decisiones de diseño
 
-**Control de stock atómico**
+**Control de stock**
 El descuento se realiza en una sola sentencia:
 
 ```sql
@@ -453,7 +446,7 @@ UPDATE books SET stock = stock - $2 WHERE id = $1 AND stock >= $2 RETURNING *
 
 La condición dentro del propio `UPDATE` elimina la ventana entre leer y escribir.
 Si dos peticiones compiten por la última unidad, una actualiza la fila y la otra
-recibe `rowCount = 0`. No hace falta bloqueo a nivel de aplicación.
+recibe `rowCount = 0`. 
 
 **El catálogo no vive en el contexto**
 Es estado de servidor —se carga, falla, se refresca— y mezclarlo con el estado de
@@ -461,28 +454,23 @@ interfaz obligaría a resolver dos ciclos de vida distintos dentro del mismo
 reducer.
 
 **Input de búsqueda no controlado**
-Se lee con `useRef` al confirmar, no en cada pulsación, evitando re-renderizar la
-rejilla completa mientras se escribe.
+Se lee con `useRef` al confirmar
 
 **Sin librería de estado de servidor**
 `useBooks` y `useBookDetail` implementan cancelación y estados de carga a mano.
-Es el objetivo formativo del proyecto; en producción correspondería TanStack
-Query.
+
 
 **Documentación con JSDoc**
 Cada capa documenta su contrato: parámetros, valor devuelto y errores lanzados
-con `@throws`. Los typedefs de las entidades (`Book`, `CartItem`, `BooksState`)
-se declaran una sola vez y se referencian con `import('./types.js').Book` en
-lugar de redefinirse en cada archivo.
+con `@throws`. 
 
 ---
 
 ## Convenciones
 
 - Código en inglés, comentarios y documentación en español.
-- Commits siguiendo Conventional Commits (`feat`, `fix`, `docs`, `refactor`).
 - Nombres de carpeta en minúscula: Vite distingue mayúsculas aunque Windows no.
-- Abstracción a la tercera repetición, no antes.
+
 
 ---
 

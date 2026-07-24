@@ -4,7 +4,7 @@
  *
  * @property {string} name - Siempre "ApiError".
  * @property {number|null} status - Código HTTP; null si no hubo respuesta.
- * @property {string|null} code - Código de dominio del backend, si lo hay.
+ * @property {string|null} code - Código de dominio del backen.
  * @property {boolean} isNetworkError - true si la petición salió pero no hubo respuesta.
  */
 export class ApiError extends Error {

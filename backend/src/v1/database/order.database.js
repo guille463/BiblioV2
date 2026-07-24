@@ -9,7 +9,7 @@ import { pool } from "../db.js";
  *
  * Si rowCount es 0 significa que el libro no existe o no hay stock suficiente.
  *
- * @param {OrderItem[]} items - Sin ids duplicados (validado en el controlador).
+ * @param {OrderItem[]} items - Sin ids duplicados
  * @returns {Promise<OrderResult>}
  * @throws {{code: 'OUT_OF_STOCK', bookId: number}} Si algún libro no admite el descuento.
  */

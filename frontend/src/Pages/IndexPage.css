@@ -27,3 +27,8 @@
   color: var(--color-primary);
   margin-bottom: 0.4rem;
 }
+
+.home-info-item p {
+  display: flex;
+  justify-content: center;
+}

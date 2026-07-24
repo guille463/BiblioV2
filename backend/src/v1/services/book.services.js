@@ -34,7 +34,6 @@ export const deleteBookById = async (id) => {
 };
 
 /**
- * No valida los datos de entrada: la validación vive en el controlador.
  * @param {BookInput} data
  * @returns {Promise<Book>}
  */

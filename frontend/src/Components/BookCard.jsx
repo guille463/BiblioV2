@@ -6,9 +6,7 @@ import { useBooksState, useBooksDispatch } from "../context/books-context";
 /**
  * Tarjeta de libro del catálogo.
  *
- * Consume favoritos y carrito directamente del contexto en vez de recibirlos
- * por props: evita atravesar BooksPage y FavBookPage con datos que solo usa
- * la tarjeta.
+ * Consume favoritos y carrito directamente del contexto.
  *
  * @param {Object} props
  * @param {Book} props.book

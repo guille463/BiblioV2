@@ -4,8 +4,7 @@ import { BookServices } from "../services/BookServices";
 /**
  * Carga el catálogo y gestiona la búsqueda por texto.
  *
- * Mantiene dos flujos independientes: la carga inicial (una sola vez, al
- * montar) y la búsqueda bajo demanda, con estados de carga y error separados
+ * Mantiene dos flujos independientes, la carga inicial y la búsqueda, con estados de carga y error separados
  * para que un fallo de búsqueda no oculte el catálogo ya cargado.
  *
  * @returns {{
@@ -57,10 +56,8 @@ export function useBooks() {
   /**
    * Lanza una búsqueda cancelando la anterior si sigue en vuelo.
    *
-   * El AbortController se guarda en una ref, no en estado: cambiarlo no debe
-   * provocar render. Al terminar, solo se apaga searchLoading si el controller
-   * sigue siendo el actual; si otra búsqueda ya lo reemplazó, apagarlo dejaría
-   * la UI sin indicador mientras la nueva petición sigue viva.
+   * El AbortController se guarda en una ref. Al terminar, solo se apaga searchLoading si el controller
+   * sigue siendo el actual.
    *
    * @param {string} query - Cadena vacía limpia los resultados sin pedir nada.
    * @returns {Promise<void>}

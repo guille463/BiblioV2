@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useBooksState } from "../context/books-context";
 import { Link } from "react-router-dom";
 import { useClickOutside } from "../hooks/useClickOutside";
@@ -8,26 +8,30 @@ import "./Header.css";
 /**
  * Cabecera con navegación y carrito desplegable.
  *
- * El carrito se lee del contexto; la compra se delega a App, que es quien
- * posee el catálogo y debe refrescar el stock tras el pedido.
- *
  * @param {Object} props
- * @param {string|null} props.checkoutError - Mensaje de error del último intento de compra.
+ * @param {string|null} props.checkoutError - Mensaje de error
  * @param {() => void} props.onPurchase
  */
 export function Header({ checkoutError, onPurchase }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);
   const { cart } = useBooksState();
+
+  /** Total de unidades */
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-  const handleToggleCart = () => {
-    setIsCartOpen((prev) => !prev);
-  };
-
-  useClickOutside(cartRef, () => setIsCartOpen(false), isCartOpen);
+  const cartTotal = cart.reduce(
+    (total, item) => total + Number(item.book.price) * item.quantity,
+    0,
+  );
 
   const isCartEmpty = cartCount === 0;
+
+  const handleToggleCart = () => setIsCartOpen((prev) => !prev);
+
+  const handleCloseCart = useCallback(() => setIsCartOpen(false), []);
+
+  useClickOutside(cartRef, handleCloseCart, isCartOpen);
 
   return (
     <header className="header">
@@ -44,7 +48,11 @@ export function Header({ checkoutError, onPurchase }) {
         </Link>
 
         <div className="cart-wrapper" ref={cartRef}>
-          <button className="cart-button" onClick={handleToggleCart}>
+          <button
+            className="cart-button"
+            onClick={handleToggleCart}
+            aria-expanded={isCartOpen}
+          >
             Carrito ({cartCount})
           </button>
 
@@ -57,6 +65,12 @@ export function Header({ checkoutError, onPurchase }) {
                   {cart.map((item) => (
                     <PurchaseCard key={item.book.id} item={item} />
                   ))}
+
+                  <div className="cart-total">
+                    <span>Total</span>
+                    <span>{cartTotal.toFixed(2)} €</span>
+                  </div>
+
                   <button className="cart-buy-button" onClick={onPurchase}>
                     Comprar
                   </button>

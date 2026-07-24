@@ -1,8 +1,4 @@
 import { createContext, use } from "react";
-/**
- * Estado y dispatch viajan en contextos separados: un componente que solo
- * despacha acciones no se re-renderiza cuando cambia el estado.
- */
 
 /** @type {import('react').Context<BooksState|null>} */
 export const BooksContext = createContext(null);
@@ -22,7 +18,7 @@ export function useBooksState() {
 }
 
 /**
- * Obtiene el dispatch del reducer global.
+ * Obtiene el dispatch
  * @returns {import('react').Dispatch<BooksAction>}
  * @throws {Error} Si se llama fuera de BooksProvider.
  */

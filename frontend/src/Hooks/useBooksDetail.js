@@ -4,9 +4,6 @@ import { BookServices } from "../services/BookServices";
 /**
  * Carga un libro concreto por id.
  *
- * Se remonta al cambiar el id: aborta la petición anterior desde el cleanup
- * del efecto, de modo que una respuesta tardía no pise el libro actual.
- *
  * @param {string|number|undefined} id - Sin id, el hook no pide nada.
  * @returns {{book: Book|null, loadingDetail: boolean, errorDetail: string|null}}
  */

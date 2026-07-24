@@ -8,7 +8,7 @@ import "./BookCardDetail.css";
 /**
  * Vista de detalle de un libro.
  *
- * Consume favoritos y carrito del contexto, igual que BookCard: la página
+ * Consume favoritos y carrito del contexto, igual que BookCard esta página
  * solo aporta el libro cargado.
  *
  * @param {Object} props

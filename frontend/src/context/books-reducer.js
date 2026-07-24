@@ -3,8 +3,6 @@ export const initialState = { favIsbns: [], cart: [] };
 /**
  * Reducer del estado global de libros: favoritos y carrito.
  *
- * Todas las ramas devuelven una referencia nueva; ninguna muta el estado
- * recibido. Es lo que permite a React detectar el cambio por identidad.
  *
  * @param {BooksState} state
  * @param {BooksAction} action
@@ -57,7 +55,7 @@ export function booksReducer(state, action) {
     }
 
     /**
-     * Resta una unidad. El filter posterior elimina la línea si la cantidad
+     * Resta una unidad. El filter elimina la línea si la cantidad
      * llega a 0
      */
     case "REMOVE_ONE_FROM_CART": {

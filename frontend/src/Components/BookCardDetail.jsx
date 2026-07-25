@@ -1,9 +1,8 @@
 import { FavEmoji } from "../utils/Emojis";
 import { useBooksState, useBooksDispatch } from "../context/books-context";
+import { BookCover } from "./BookCover";
 
 import "./BookCardDetail.css";
-
-/** @typedef {import('../types.js').Book} Book */
 
 /**
  * Vista de detalle de un libro.
@@ -32,10 +31,11 @@ export function BookCardDetail({ book }) {
   return (
     <article className="book-detail-card">
       <header className="book-detail-card-header">
-        <img
+        <BookCover
+          isbn={book.isbn}
+          title={book.title}
+          size="M"
           className="book-detail-card-img"
-          src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
-          alt={book.title}
         />
         <div className="book-detail-card-info">
           <h3 className="book-detail-card-title">Titulo: {book.title}</h3>

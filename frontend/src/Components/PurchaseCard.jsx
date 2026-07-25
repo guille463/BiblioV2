@@ -1,7 +1,6 @@
 import { useBooksDispatch } from "../context/books-context";
+import { BookCover } from "./BookCover";
 import "./PurchaseCard.css";
-
-/** @typedef {import('../types.js').CartItem} CartItem */
 
 /**
  * Línea del carrito en el desplegable del Header.
@@ -22,10 +21,11 @@ export function PurchaseCard({ item }) {
 
   return (
     <article className="purchase-card">
-      <img
+      <BookCover
+        isbn={book.isbn}
+        title={book.title}
+        size="S"
         className="purchase-card-img"
-        src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-S.jpg`}
-        alt={book.title}
       />
 
       <div className="purchase-card-info">

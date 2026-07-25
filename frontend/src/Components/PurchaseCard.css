@@ -118,3 +118,7 @@
 .purchase-card-remove:hover {
   background: rgba(179, 64, 58, 0.1);
 }
+
+.purchase-card-img.book-cover-fallback span {
+  display: none;
+}

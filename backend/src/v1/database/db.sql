@@ -1,3 +1,5 @@
+SET client_encoding TO 'UTF8';
+
 --TABLA LIBROS
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,

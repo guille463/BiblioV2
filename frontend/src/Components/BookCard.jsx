@@ -1,6 +1,7 @@
 import "./BookCard.css";
 import { FavEmoji } from "../utils/Emojis";
 import { Link } from "react-router-dom";
+import { BookCover } from "./BookCover";
 import { useBooksState, useBooksDispatch } from "../context/books-context";
 
 /**
@@ -26,10 +27,11 @@ export function BookCard({ book }) {
     <article className="book-card">
       <Link to={`/books/${book.id}`} className="book-card-link">
         <header className="book-card-header">
-          <img
+          <BookCover
+            isbn={book.isbn}
+            title={book.title}
+            size="M"
             className="book-card-img"
-            src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
-            alt={book.title}
           />
           <div className="book-card-info">
             <h3 className="book-card-title">Titulo: {book.title}</h3>

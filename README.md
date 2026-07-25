@@ -145,6 +145,10 @@ Portada
 Catálogo con búsqueda y paginación
 ![Catálogo](imgsReadme/Catalogo.png)
 
+Favoritos
+![Favoritos](imgsReadme/Favoritos.png)
+
+
 Detalle de libro
 ![Detalle](imgsReadme/Detalle.png)
 

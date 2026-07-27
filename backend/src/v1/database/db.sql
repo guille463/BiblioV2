@@ -12,11 +12,13 @@ CREATE TABLE books (
     price DECIMAL (10, 2) NOT NULL
 );
 
+--TABLA ORDENES
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+--TABLA LINEA DE ORDENES
 CREATE TABLE order_items (
   order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
   book_id INTEGER NOT NULL REFERENCES books(id),
@@ -24,6 +26,13 @@ CREATE TABLE order_items (
   PRIMARY KEY (order_id, book_id)
 );
 
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY, 
+  email VARCHAR(255) UNIQUE NOT NULL, 
+  password_hash TEXT NOT NULL, 
+  role VARCHAR(20) NOT NULL DEFAULT 'customer' CHECK (role IN ('customer', 'admin')),
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+); 
 
 --DATOS PRUEBA LIBROS
 INSERT INTO books (title, author, isbn, genre, year, stock, price) VALUES

@@ -2,6 +2,8 @@
 	"dependencies": {
 		"argon2": "^0.45.1",
 		"axios": "^1.18.1",
+		"cookie-parser": "^1.4.7",
+		"jsonwebtoken": "^9.0.3",
 		"react-router-dom": "^7.18.1"
 	}
 }

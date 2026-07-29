@@ -20,3 +20,17 @@ export const registerUser = async ({ email, password }) => {
     throw err;
   }
 };
+
+export const loginUser = async ({ email, password }) => {
+  const user = await userDatabase.findByEmail(email);
+  if (!user) {
+    throw { code: "INVALID_CREDENTIALS" };
+  }
+
+  const passwordCheck = await argon2.verify(user.password_hash, password);
+  if (!passwordCheck) {
+    throw { code: "INVALID_CREDENTIALS" };
+  }
+
+  return user;
+};

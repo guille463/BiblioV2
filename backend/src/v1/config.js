@@ -6,3 +6,4 @@ export const DB_PASSWORD = process.env.DB_PASSWORD;
 export const DB_DATABASE = process.env.DB_DATABASE;
 export const DB_PORT = process.env.DB_PORT;
 export const PORT = process.env.PORT || 4000;
+export const JWT_SECRET = process.env.JWT_SECRET;

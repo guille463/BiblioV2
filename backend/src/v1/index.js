@@ -5,11 +5,13 @@ import booksRoutes from "../v1/routes/book.routes.js";
 import ordersRoutes from "../v1/routes/order.routes.js";
 import authRoutes from "../v1/routes/auth.routes.js";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/v1", booksRoutes);
 app.use("/api/v1", ordersRoutes);
 app.use("/api/v1", authRoutes);

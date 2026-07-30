@@ -32,5 +32,6 @@ export const loginUser = async ({ email, password }) => {
     throw { code: "INVALID_CREDENTIALS" };
   }
 
-  return user;
+  const { password_hash, ...safeUser } = user;
+  return safeUser;
 };
